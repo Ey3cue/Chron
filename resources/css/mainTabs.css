@@ -1,0 +1,121 @@
+
+
+.chrMainTabs {
+	position: absolute;
+	width: 100%;
+	height: 100%;
+	transition: all 0.8s;
+}
+
+.chrMainTabsCollapsed {
+	height: 150px;
+}
+
+.chrMainTab {
+	position: absolute;
+	top: 0;
+	left: 0;
+	height: 100%;
+	width: 33.33%;
+	cursor: pointer;
+	transition: all 0.8s;
+}
+
+.chrMainTabLeft {
+	left: 0;
+	-webkit-animation: chrTabFromMiddle 0.8s;
+}
+
+.chrMainTabMiddle {
+	left: 33.33%;
+	-webkit-animation: chrTabToMiddle 0.8s;
+}
+
+.chrMainTabRight {
+	left: 66.66%;
+	-webkit-animation: chrTabFromMiddle 0.8s;
+}
+
+.chrMainTabTitleContainer {
+	position: relative;
+	width: 100%;
+	top: 30%;
+}
+
+.chrMainTabTitle, 
+.chrMainTabSeparator, 
+.chrMainTabDescription {
+	position: absolute;
+	top: 0;
+	width: 100%;
+	text-align: center;
+	transition: all 0.4s;
+}
+
+.chrMainTabTitle {
+	font-size: 50px;
+}
+
+.chrMainTabDescription {
+	font-size: 24px;
+	top: 30px;
+	opacity: 0;
+}
+
+.chrMainTabSeparator {
+	position: absolute;
+	top: 48px;
+	left: 50%;
+	width: 0;
+	height: 1px;
+	background: linear-gradient(90deg, rgba(0, 0, 0, 0), rgba(224, 244, 244, 1), rgba(0, 0, 0, 0));
+	opacity: 0;
+}
+
+.chrMainTabActive .chrMainTabTitle,
+.chrMainTab:hover .chrMainTabTitle {
+	top: -20px;
+}
+
+.chrMainTabActive .chrMainTabSeparator,
+.chrMainTab:hover .chrMainTabSeparator {
+	left: 10%;
+	width: 80%;
+	opacity: 1;
+}
+
+.chrMainTabActive .chrMainTabDescription,
+.chrMainTab:hover .chrMainTabDescription {
+	top: 50px;
+	opacity: 1;
+}
+
+@-webkit-keyframes chrTabToMiddle {
+	0% {
+		opacity: 1;
+		-webkit-transform: scaleX(1);
+	}
+	50% {
+		opacity: 0.25;
+		-webkit-transform: scaleX(0);
+	}
+	100% {
+		opacity: 1;
+		-webkit-transform: scaleX(1);
+	}
+}
+
+@-webkit-keyframes chrTabFromMiddle {
+	0% {
+		opacity: 1;
+		-webkit-transform: scaleX(1);
+	}
+	50% {
+		opacity: 0.25;
+		-webkit-transform: scaleX(0);
+	}
+	100% {
+		opacity: 1;
+		-webkit-transform: scaleX(1);
+	}
+}

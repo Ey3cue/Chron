@@ -1,4 +1,12 @@
+/* ----------
+   control.js
 
+   Initializes the document.
+   ---------- */
+
+var COMPILER_ID = 'chronosll';
+var OS_ID = 'chronos';
+var CPU_ID = 'chroniscpu';
 
 var __resizeFunctions = [];
 

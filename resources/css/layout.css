@@ -34,67 +34,7 @@
 }
 
 .grid:after {
-  content: '';
-  display: table;
-  clear: both;
-}
-
-.chrMainTabs {
-	height: 100%;
-	background-color: #14181B;
-	font: 36pt 'Segoe UI Light';
-	color: #E0E0E0;
-}
-
-.chrMainTab {
-	position: relative;
-	padding: 0;
-	height: 100%;
-	transition: all 0.4s;
-}
-
-/* Title and description */
-.chrMainTabTitle, .chrMainTabDesc {
-	position: absolute;
-	width: 100%;
-	text-align: center;
-	transition: all 0.4s;
-}
-
-.chrMainTabTitle {
-	top: 40%;
-}
-
-.chrMainTabDesc {
-	top: 48%;
-	font-size: 24pt;
-	opacity: 0;
-}
-
-.chrMainTab:hover .chrMainTabTitle {
-}
-
-.chrMainTab:hover .chrMainTabDesc {
-	top: 100%;
-	opacity: 1.0;
-}
-
-
-.chMainTabs > div:hover > div {
-	top: 40%;
-}
-
-.chMainTabs > div > div:after {
-	position: absolute;
-	left: 0;
-	top: 0;
-	width: 100%;
-	transition: all 0.4s;
-	opacity: 0;
-	content: 'Test';
-}
-
-.chMainTabs > div > div:hover:after {
-	opacity: 1.0;
-	top: 20%;
+	content: '';
+	display: table;
+	clear: both;
 }

@@ -33,25 +33,4 @@ defineFunction(String, function pad(length, character) {
     return str;
 });
 
-$.fn.center = function () {
-    this.wrap('<div></div>');
-    var $div = this.parent();
-    
-    $div.css({
-        width: '100%',
-        height: '100%',
-        'text-align': 'center'
-    });
-    
-    this.css({
-        position: 'relative',
-        margin: 'auto',
-        top: $div.height() / 2 - this.height() / 2
-    }).children().css({
-        margin: 'auto'
-    });
-    
-    return this;
-};
-
 })();

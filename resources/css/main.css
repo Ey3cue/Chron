@@ -1,8 +1,17 @@
 
+@font-face
+{
+	font-family: segoeuil;
+	src: url(../fonts/segoeuil.ttf);
+}
+
 html {
 	height: 100%;
 }
 
 body {
 	height: 100%;
+	background-color: #141414;
+	font: 15px 'Segoe UI Light',segoeuil;
+	color: #E0E0E0;
 }
