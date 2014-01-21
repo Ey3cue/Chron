@@ -11,23 +11,66 @@
 	<link rel="shortcut icon" href="images/favicon.ico" type="image/x-icon">-->
 
 	<link rel="stylesheet" href="vendor/normalize.css" type="text/css">
+	<link rel="stylesheet" href="vendor/jquery/perfect-scrollbar/perfect-scrollbar-0.4.6.min.css" type="text/css">
 
 	<link rel="stylesheet" href="resources/css/main.css" type="text/css">
 	<link rel="stylesheet" href="resources/css/layout.css" type="text/css">
 	<link rel="stylesheet" href="resources/css/mainTabs.css" type="text/css">
-	<link rel="stylesheet" href="resources/css/content.css" type="text/css">
+	<link rel="stylesheet" href="resources/css/os.css" type="text/css">
 
 	<!-- Libraries -->
 	<script type="text/javascript" src="vendor/jquery/jquery-2.0.3.min.js"></script>
 	<script type="text/javascript" src="vendor/jquery/jquery-ui-1.10.3.min.js"></script>
+	<script type="text/javascript" src="vendor/jquery/perfect-scrollbar/perfect-scrollbar-0.4.6.with-mousewheel.min.js"></script>
 
-	<!-- Scripts -->
+	<!-- General -->
 	<script type="text/javascript" src="resources/js/control.js"></script>
 	<script type="text/javascript" src="resources/js/layout/layout.js"></script>
 	<script type="text/javascript" src="resources/js/utils/utils.js"></script>
 
+	<!-- OS -->
+	<script type="text/javascript" src="resources/js/os/host/control.js"></script>
+	<script type="text/javascript" src="resources/js/os/host/console.js"></script>
+	<script type="text/javascript" src="resources/js/os/host/statusBar.js"></script>
+	<script type="text/javascript" src="resources/js/os/host/log.js"></script>
+
+	<script type="text/javascript" src="resources/js/os/os/kernel.js"></script>
+	<script type="text/javascript" src="resources/js/os/os/interrupt.js"></script>
+	
+	<script type="text/javascript" src="resources/js/os/os/drivers/keyboard.js"></script>
+
+
 </head>
 <body>
+
+<div id="compiler">
+	<div class="comingSoon"></div>
+</div>
+
+<div id="os">
+	<div id="grid">
+		<div class="col-1-2">
+			<div id="osConsole" class="panel scrollY">
+				<div id="osConsoleOutput"></div>
+				<div id="osConsoleInput"></div>
+			</div>
+		</div>
+		<div class="col-1-2">
+			<div id="osStatusBar" class="panel">
+				<div id="osButtonPower" title="Power"></div>
+				<div id="osButtonHalt" title="Halt"></div>
+				<div id="osButtonRestart" title="Restart"></div>
+				<div id="osStatus"></div>
+				<div id="osTime">Thu Jan 16 2014 15.13.24</div>
+			</div>
+			<div id="osLog" class="panel scroll"></div>
+		</div>
+	</div>
+</div>
+
+<div id="cpu">
+	<div class="comingSoon"></div>
+</div>
 
 </body>
 </html>

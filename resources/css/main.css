@@ -7,6 +7,7 @@
 
 html {
 	height: 100%;
+	overflow-y: scroll;
 }
 
 body {
@@ -14,4 +15,51 @@ body {
 	background-color: #141414;
 	font: 15px 'Segoe UI Light',segoeuil;
 	color: #E0E0E0;
+	opacity: 0;
+	transition: opacity 2s;
 }
+
+.spacer {
+	clear: both;
+}
+
+.contentContainer {
+	position: absolute;
+	margin-top: 175px;
+	top: 300px;
+	width: 100%;
+	opacity: 0;
+	transition: all 0.8s;
+}
+
+.contentContainerVisible {
+	top: 0;
+	opacity: 1;
+	z-index: 1;
+}
+
+.mainContent {
+	margin: auto;
+	width: 1000px;
+}
+
+.comingSoon {
+	padding: 50px;
+	width: 100%;
+	font-size: 50px;
+	text-align: center;
+}
+
+.comingSoon:after {
+	content: 'Coming soon...';
+}
+
+/* Font colors */
+.red    { color: #FF4D4D; }
+.orange { color: #FFA64D; }
+.yellow { color: #FFFF4D; }
+.green  { color: #7AFF4D; }
+.blue   { color: #4D7AFF; }
+.purple { color: #7A4DFF; }
+
+.grey   { opacity: 0.6; }

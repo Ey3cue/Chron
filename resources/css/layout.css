@@ -6,6 +6,7 @@
 
 [class*='col-'] {
 	padding-right: 20px;
+	padding-bottom: 20px;
 	float: left;
 }
 
@@ -33,8 +34,42 @@
 	width: 12.5%;
 }
 
+.grid {
+}
+
 .grid:after {
 	content: '';
 	display: table;
 	clear: both;
+}
+
+.panel {
+	/*
+	height: 100px;
+	margin: 0 20px;
+	*/
+	margin-bottom: 10px;
+}
+
+.scroll,
+.scrollY,
+.scrollX {
+	position: relative;
+	overflow: hidden;
+}
+
+.title {
+	position: relative;
+	text-align: center;
+	padding-bottom: 10px;
+}
+
+.title:before {
+	content: '';
+	position: absolute;
+	bottom: 5px;
+	left: 0;
+	width: 100%;
+	height: 1px;
+	background: linear-gradient(90deg, rgba(224, 244, 244, 0.05), rgba(224, 244, 244, 1), rgba(224, 244, 244, 0.05));
 }
