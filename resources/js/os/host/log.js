@@ -3,10 +3,13 @@ OS.Log = {};
 
 (function () {
 
+var MAXIMUM_SIZE = 200;
+
 var _$log;
 
 var _lastMessage;
 var _messageRepeatCount;
+var _messageCount;
 
 var _$lastEntry;
 
@@ -15,6 +18,7 @@ OS.Log.init = function () {
 
     _lastMessage = null;
     _messageRepeatCount = 1;
+    _messageCount = 0;
 
     _$lastEntry = null;
 };
@@ -40,6 +44,12 @@ OS.Log.add = function (message, source) {
 
         _messageRepeatCount = 1;
         _lastMessage = message;
+        _messageCount++;
+    }
+
+    if (_messageCount > MAXIMUM_SIZE) {
+        $('div:last-child', _$log).remove();
+        _messageCount--;
     }
 };
 
