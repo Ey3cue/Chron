@@ -115,6 +115,8 @@ OS.Console.backspace = function () {
 
 OS.Console.enter = function () {
     _$consoleOutput.append('<div class="grey">' + _prompt + _$input.html() + '</div>');
+    _$input.text('');
+    _inputText = '';
 };
 
 function caretFlash() {
