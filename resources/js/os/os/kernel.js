@@ -11,9 +11,15 @@ OS.Kernel.start = OS.Kernel.bootstrap = function () {
 
     trace('Loading device drivers.');
     OS.KeyboardDriver.start();
+
+    trace('Starting the shell.');
+    OS.Shell.start();
 };
 
 OS.Kernel.stop = function () {
+
+    trace('Stopping the shell.');
+    OS.Shell.stop();
 
     trace('Unloading device drivers.');
     OS.KeyboardDriver.stop();

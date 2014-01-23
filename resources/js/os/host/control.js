@@ -23,14 +23,17 @@ OS.Status = new Enum(
 OS.clock = 0;
 OS.cpuClockInterval = null;
 OS.status = OS.Status.SHUTDOWN;
+OS.info = 'ChronOS version 2.0 Alpha by Christopher Cordisco';
 
 
 (function () {
 
 OS.Control.init = function () {
-    OS.Console.init();
     OS.StatusBar.init();
     OS.Log.init();
+
+    OS.Console.init();
+    OS.Shell.init();
 
     OS.log = OS.Log.add;
     OS.trace = OS.Control.trace;

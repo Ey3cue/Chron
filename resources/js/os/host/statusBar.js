@@ -23,7 +23,7 @@ OS.StatusBar.init = function () {
 
     _$buttons = $();
     for (var key in _buttons) {
-        // Might be a better way to do this...
+        // There might be a better way to do this...
         _$buttons = _$buttons.add(_buttons[key]);
     }
 

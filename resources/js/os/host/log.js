@@ -3,7 +3,7 @@ OS.Log = {};
 
 (function () {
 
-var MAXIMUM_SIZE = 200;
+var MAXIMUM_SIZE = 50;
 
 var _$log;
 
@@ -23,13 +23,9 @@ OS.Log.init = function () {
     _$lastEntry = null;
 };
 
-OS.Log.start = function () {
+OS.Log.start = function () {};
 
-};
-
-OS.Log.stop = function () {
-
-};
+OS.Log.stop = function () {};
 
 OS.Log.add = function (message, source) {
     if (_lastMessage === message) {
@@ -48,6 +44,7 @@ OS.Log.add = function (message, source) {
         );
 
         _$log.prepend($entry);
+        _$log.perfectScrollbar('update');
         _$lastEntry = $entry;
 
         _messageRepeatCount = 1;
@@ -56,13 +53,15 @@ OS.Log.add = function (message, source) {
     }
 
     if (_messageCount > MAXIMUM_SIZE) {
-        $('div:last-child', _$log).remove();
+        $('.entry', _$log).last().remove();
+        _$log.perfectScrollbar('update');
         _messageCount--;
     }
 };
 
 OS.Log.clear = function () {
     $('.entry', _$log).remove();
+    _messageCount = 0;
 };
 
 function getCurrentDateStamp()

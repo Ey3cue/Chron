@@ -72,6 +72,10 @@ OS.Console.stop = function () {
     _$input.off('keydown');
 };
 
+OS.Console.clear = function () {
+    _$consoleOutput.html('');
+};
+
 function input(event) {
     // Check if F5 was pressed to refresh page
     if (event.which === 116) {
@@ -106,9 +110,10 @@ OS.Console.bsod = function () {
     // TODO
 };
 
-OS.Console.write = function (chr) {
+OS.Console.writeInput = function (chr) {
     _inputText += chr;
     _$input.text(_inputText);
+    scrollToBottom();
 };
 
 OS.Console.backspace = function () {
@@ -120,14 +125,40 @@ OS.Console.backspace = function () {
 
 OS.Console.enter = function () {
     _$consoleOutput.append('<div class="grey">' + _prompt + _$input.html() + '</div>');
-    _inputText = '';
-    _$input.text('');
+
+    if (_inputText.length) {
+        var $output = $('<div class="output"></div>');
+        _$consoleOutput.append($output);
+
+        function write(output) {
+            $output.html(formatOutput(output));
+            scrollToBottom();
+        }
+
+        OS.Shell.issueCommand(write, _inputText);
+
+        _inputText = '';
+        _$input.text('');
+    }
+
+    scrollToBottom();
 };
 
 function caretFlash() {
     _$caret.toggleClass('osConsoleCaret');
 }
 
+function formatOutput(output) {
+    output = Utils.textToHtml(output);
+
+    return output.replace(/`([\w ]+)`/g, '<span class="$1">')
+                 .replace(/``/g, '</span>');
+}
+
+function scrollToBottom() {
+    _$console.scrollTop(_$consoleOutput.height() + _$consoleInput.height());
+    _$console.perfectScrollbar('update');
+}
 
 // ---------- ----------
 

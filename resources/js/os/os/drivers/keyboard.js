@@ -46,7 +46,7 @@ OS.KeyboardDriver.isr = function () {
                 chr = String.fromCharCode(keyCode);
             }
 
-            OS.Console.write(chr);
+            OS.Console.writeInput(chr);
         } else if ( ((keyCode >=  48) && (keyCode <=  57)) ||  // digits...
                     ((keyCode >= 186) && (keyCode <= 192)) ||  // special characters...
                     ((keyCode >= 219) && (keyCode <= 222)) ) { // more special characters...
@@ -60,9 +60,9 @@ OS.KeyboardDriver.isr = function () {
                 chr = _shiftedSymbols[chr];
             }
 
-            OS.Console.write(chr);
+            OS.Console.writeInput(chr);
         } else if (keyCode === 32) { // Space
-            OS.Console.write(' ');
+            OS.Console.writeInput(' ');
         } else if (keyCode === 13) { // Enter
             OS.Console.enter();
             // TODO tell shell to handle input

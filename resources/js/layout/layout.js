@@ -101,7 +101,7 @@ MainTabs.select = function (event) {
     }
 
     if (id === 'os') {
-        //OS.Control.activate();
+        OS.Control.activate();
     }
 };
 

@@ -131,4 +131,8 @@ Utils.getUrlParameters = function () {
     return params;
 };
 
+Utils.textToHtml = function (text) {
+    return $('<div>').text(text).html();
+};
+
 })();

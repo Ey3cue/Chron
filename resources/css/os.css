@@ -1,9 +1,9 @@
 
-/* Console */
-
 #os {
     font: 10pt Consolas, monospace;
 }
+
+/* Console */
 
 #osConsole {
     height: 500px;
@@ -11,6 +11,11 @@
     word-wrap: break-word;
     opacity: 0;
     transition: opacity 0.4s;
+}
+
+#osConsole .output {
+    padding: 10px;
+    white-space: pre;
 }
 
 #osConsoleInput span {
@@ -87,13 +92,4 @@
     height: 150px;
     font: 10pt 'Consolas', monospace;
     white-space: nowrap;
-}
-
-#osLog .entry {
-    opacity: 0;
-    transition: opacity 0.4s;
-}
-
-#osLog .showEntry {
-    opacity: 1;
 }
