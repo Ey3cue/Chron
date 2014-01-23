@@ -10,7 +10,7 @@
     cursor: text;
     word-wrap: break-word;
     opacity: 0;
-    transition: opacity 1s;
+    transition: opacity 0.4s;
 }
 
 #osConsoleInput span {
@@ -68,7 +68,7 @@
     width: 8px;
     height: 8px;
     border-radius: 4px;
-    transition: 1s;
+    transition: 0.4s;
 }
 
 #osStatus.operating { background-color: #7AFF4D; }
@@ -77,7 +77,7 @@
 #osTime {
     float: right;
     opacity: 0;
-    transition: opacity 1s;
+    transition: opacity 0.4s;
 }
 
 /* log */
@@ -87,4 +87,13 @@
     height: 150px;
     font: 10pt 'Consolas', monospace;
     white-space: nowrap;
+}
+
+#osLog .entry {
+    opacity: 0;
+    transition: opacity 0.4s;
+}
+
+#osLog .showEntry {
+    opacity: 1;
 }

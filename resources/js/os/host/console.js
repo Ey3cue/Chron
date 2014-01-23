@@ -67,12 +67,17 @@ OS.Console.start = function () {
     _$input.on('keydown', input);
 };
 
-OS.Console.shutdown = function () {
+OS.Console.stop = function () {
     _$console.css('opacity', 0);
     _$input.off('keydown');
 };
 
 function input(event) {
+    // Check if F5 was pressed to refresh page
+    if (event.which === 116) {
+        return;
+    }
+
     event.preventDefault();
     // Do not interrupt for Ctrl, Alt, or Shift, as they are sent with the key if depressed.
     if (!(event.which >= 15 && event.which <= 17)) {
@@ -86,7 +91,7 @@ function input(event) {
         });
 
         if (isBufferEmpty) {
-            OS.Kernel.interrupt(OS.IRQ.keyboard);
+            OS.Kernel.interrupt(OS.Irq.KEYBOARD);
         }
     }
 }
@@ -115,8 +120,8 @@ OS.Console.backspace = function () {
 
 OS.Console.enter = function () {
     _$consoleOutput.append('<div class="grey">' + _prompt + _$input.html() + '</div>');
-    _$input.text('');
     _inputText = '';
+    _$input.text('');
 };
 
 function caretFlash() {

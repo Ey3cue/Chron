@@ -6,11 +6,17 @@ OS.Kernel = {};
 var _interruptQueue = null;
 
 
-OS.Kernel.bootstrap = function () {
+OS.Kernel.start = OS.Kernel.bootstrap = function () {
     _interruptQueue = [];
 
     trace('Loading device drivers.');
-    OS.KeyboardDriver.load();
+    OS.KeyboardDriver.start();
+};
+
+OS.Kernel.stop = function () {
+
+    trace('Unloading device drivers.');
+    OS.KeyboardDriver.stop();
 };
 
 OS.Kernel.clockPulse = function () {
@@ -28,10 +34,10 @@ OS.Kernel.interrupt = function (irq, params) {
 };
 
 function handleInterrupt(interrupt) {
-    trace('Interrupt: ' + interrupt.name);
+    trace('Interrupt: ' + interrupt.irq);
 
     switch (interrupt.irq) {
-    case OS.IRQ.keyboard:
+    case OS.Irq.KEYBOARD:
         OS.KeyboardDriver.isr(interrupt.params);
         break;
     default:
@@ -50,10 +56,10 @@ function trace(message) {
     // Don't log every idle clock pulse.
     if (message === 'Idle') {
         if (OS.clock % 10 === 0) {
-            OS.log(message, 'OS.Kernel');
+            OS.log(message, 'Kernel');
         }
     } else {
-        OS.log(message, 'OS.Kernel');
+        OS.log(message, 'Kernel');
     }
 }
 

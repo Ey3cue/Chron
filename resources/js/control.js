@@ -18,10 +18,8 @@ var Compiler = {};
 var OS = {};
 var CPU = {};
 
-OS.CPU_CLOCK_INTERVAL = null;
-OS.CPU_CLOCK_SPEED = 100;
-
-OS.clock = 0;
+// Globals specific to each application will be defined in that application's control.js within
+//   the respective objects.
 
 (function () {
 
@@ -32,6 +30,10 @@ Control.init = function () {
 
 	// OS
 	OS.Control.init();
+
+	if (URL_PARAMETERS.start) {
+        MainTabs.select({ data: URL_PARAMETERS.start });
+    }
 };
 
 Control.resize = function () {

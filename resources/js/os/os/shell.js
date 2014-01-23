@@ -1,9 +1,9 @@
 
-var Shell = {};
+OS.Shell = {};
 
 (function () {
 
-Shell.init = function () {
+OS.Shell.init = function () {
     
 };
 

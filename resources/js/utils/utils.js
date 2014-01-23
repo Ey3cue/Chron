@@ -13,10 +13,13 @@ function defineFunction(obj, funct, name) {
     Object.defineProperty(obj.prototype, name, { value: funct });
 }
 
+defineFunction(String, function contains(characters) {
+    return this.indexOf(characters) !== -1;
+});
+
 defineFunction(String, function prepad(length, character) {
     character = character || ' ';
-    
-    var str = this; // This performs a deep copy.
+    var str = this.toString();
     
     while (str.length < length)
         str = character + str;
@@ -26,8 +29,7 @@ defineFunction(String, function prepad(length, character) {
 
 defineFunction(String, function pad(length, character) {
     character = character || ' ';
-    
-    var str = this; // This performs a deep copy.
+    var str = this.toString();
     
     while (str.length < length)
         str += character;
@@ -46,10 +48,24 @@ defineFunction(String, function varToTitle() {
 
 defineFunction(String, function varToPhrase() {
     if (!this.length) {
-        return this;
+        return this.toString();
     }
 
-    var str = this.replace(/([A-Z])/g, ' $1');
+    var str = this.toString();
+
+    if (str.contains('_')) {
+        // Convert contant to variable style
+        str = str.replace(/_([A-Z])([A-Z]+)/g, function (match, first, second) {
+            return first.toUpperCase() + second.toLowerCase();
+        }).replace(/([A-Z]+)([A-Z].*)/, function (match, first, second) {
+            return first.toLowerCase() + second;
+        });
+    } else if (str === str.toUpperCase()) {
+        return str[0].toUpperCase() + str.substring(1).toLowerCase();
+    }
+    
+    // Convert variable style to phrase
+    str = str.replace(/([A-Z])/g, ' $1');
     return str[0].toUpperCase() + str.substring(1).toLowerCase();
 });
 

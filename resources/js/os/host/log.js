@@ -23,6 +23,14 @@ OS.Log.init = function () {
     _$lastEntry = null;
 };
 
+OS.Log.start = function () {
+
+};
+
+OS.Log.stop = function () {
+
+};
+
 OS.Log.add = function (message, source) {
     if (_lastMessage === message) {
         $('.time', _$lastEntry).html(getCurrentDateStamp());
@@ -51,6 +59,10 @@ OS.Log.add = function (message, source) {
         $('div:last-child', _$log).remove();
         _messageCount--;
     }
+};
+
+OS.Log.clear = function () {
+    $('.entry', _$log).remove();
 };
 
 function getCurrentDateStamp()

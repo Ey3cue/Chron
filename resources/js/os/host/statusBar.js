@@ -6,10 +6,7 @@ OS.StatusBar = {};
 var _$osTime;
 var _$osStatus;
 
-var _$powerButton;
-var _$haltButton;
-var _$restartButton;
-
+var _buttons;
 var _$buttons;
 
 var _disabled;
@@ -18,12 +15,19 @@ OS.StatusBar.init = function () {
     _$osTime = $('#osTime');
     _$osStatus = $('#osStatus');
 
-    _$powerButton = $('#osButtonPower');
-    _$haltButton = $('#osButtonHalt');
-    _$restartButton = $('#osButtonRestart');
+    _buttons = {
+        power: $('#osButtonPower'),
+        halt: $('#osButtonHalt'),
+        restart: $('#osButtonRestart')
+    };
 
-    _$buttons = $('#osButtonPower, #osButtonHalt, #osButtonRestart');
+    _$buttons = $();
+    for (var key in _buttons) {
+        // Might be a better way to do this...
+        _$buttons = _$buttons.add(_buttons[key]);
+    }
 
+    // Update the clock every second. Not a magic number; there's 1000 ms in 1 s
     setInterval(updateTime, 1000);
 
     disableAll();
@@ -33,17 +37,21 @@ OS.StatusBar.init = function () {
 OS.StatusBar.update = function (status) {
     status = status || OS.status;
 
+    // Prevents two click listeners being registered to the same button
+    disableAll();
+
     _$osStatus.removeAttr('class');
-    _$osStatus.addClass(status);
+    _$osStatus.addClass(status.toString().toLowerCase());
 
     switch (status) {
-    case 'operating':
-        enable(_$haltButton);
-        enable(_$restartButton);
+    case OS.Status.OPERATING:
+        //enableAll();
+        enable(_buttons.power);
+        enable(_buttons.restart);
         _$osTime.css('opacity', 1);
         break;
-    case 'shutdown':
-        enable(_$powerButton);
+    case OS.Status.SHUTDOWN:
+        enable(_buttons.power);
         _$osTime.css('opacity', 0);
         break;
     }
@@ -60,12 +68,12 @@ function pressed(event) {
     _disabled = true;
     disableAll();
 
-    if (_$powerButton.is(event.target)) {
-        OS.Control.start();
-    } else if (_$haltButton.is(event.target)) {
-        
-    } else if (_$restartButton.is(event.target)) {
-
+    if (_buttons.power.is(event.target)) {
+        OS.Control.toggle();
+    } else if (_buttons.halt.is(event.target)) {
+        OS.Control.halt();
+    } else if (_buttons.restart.is(event.target)) {
+        OS.Control.restart();
     }
 }
 
@@ -79,14 +87,20 @@ function disableAll() {
              .off('click');
 }
 
-function enable($button) {
-    $button.removeClass('disabled')
-           .on('click', pressed);
+function enable($button, time) {
+    time = time || OS.TRANSITION_TIME;
+    setTimeout(function() {
+        $button.removeClass('disabled')
+               .on('click', pressed);
+    }, time);
 }
 
-function enableAll() {
-    _$buttons.removeClass('disabled')
-             .on('click', pressed);
+function enableAll(time) {
+    time = time || OS.TRANSITION_TIME;
+    setTimeout(function() {
+        _$buttons.removeClass('disabled')
+                 .on('click', pressed);
+    }, time);
 }
 
 

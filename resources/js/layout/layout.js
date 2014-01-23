@@ -1,5 +1,6 @@
 
 var Layout = {};
+var MainTabs = {};
 
 (function () {
 
@@ -19,10 +20,6 @@ Layout.init = function () {
 
     Layout.initScrollers();
 
-    if (URL_PARAMETERS.start) {
-        MainTabs.select({ data: URL_PARAMETERS.start });
-    }
-
     $('body').css('opacity', 1);
 };
 
@@ -41,7 +38,7 @@ Layout.initScrollers = function () {
 };
 
 
-var MainTabs = {
+MainTabs = {
     $tabContainer: null,
     $selectedTab: null,
     tabs: {},
@@ -101,6 +98,10 @@ MainTabs.select = function (event) {
             $('.chrMainTabMiddle').addClass('chrMainTabRight').removeClass('chrMainTabMiddle');
             MainTabs.$selectedTab.addClass('chrMainTabMiddle').removeClass('chrMainTabRight');
         }
+    }
+
+    if (id === 'os') {
+        //OS.Control.activate();
     }
 };
 

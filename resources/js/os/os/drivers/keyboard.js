@@ -5,9 +5,14 @@ OS.KeyboardDriver = {};
 
 var _loaded = false;
 
-OS.KeyboardDriver.load = function () {
+OS.KeyboardDriver.start = function () {
     _loaded = true;
     trace('Driver loaded.');
+};
+
+OS.KeyboardDriver.stop = function () {
+    _loaded = false;
+    trace('Driver unloaded.');
 };
 
 /**
@@ -68,7 +73,7 @@ OS.KeyboardDriver.isr = function () {
 };
 
 function trace(message) {
-    OS.log(message, 'OS.KeyboardDriver');
+    OS.log(message, 'KeyboardDriver');
 }
 
 /** Maps a key code (except letters) to the shifted form of it's character. */
