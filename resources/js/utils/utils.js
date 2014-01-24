@@ -146,4 +146,18 @@ Utils.pixelToLineHeight = {
     16: 19
 };
 
+
+/**
+ * Returns true if HTML5 local storage is supported.
+ * 
+ * @return {Boolean} true if HTML5 local storage is supported
+ */
+Utils.html5StorageSupported = function () {
+    try {
+        return "localStorage" in window && window["localStorage"] !== null;
+    } catch (e) {
+        return false;
+    }
+}
+
 })();
