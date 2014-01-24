@@ -1,6 +1,6 @@
 
 #os {
-    font: 10pt Consolas, monospace;
+    font: 13px Consolas, monospace;
 }
 
 /* Console */
@@ -90,7 +90,6 @@
 #osLog {
     width: 100%;
     height: 150px;
-    font: 10pt 'Consolas', monospace;
     white-space: nowrap;
 }
 
@@ -131,6 +130,14 @@
 #osMemoryDisplay {
     width: 100%;
     white-space: pre;
+    text-align: center;
     opacity: 0;
     transition: opacity 0.4s;
+}
+
+.osMemoryDisplaySeparator {
+    margin: 6px 0;
+    width: 100%;
+    height: 1px;
+    background: linear-gradient(90deg, rgba(224, 244, 244, 0.05), rgba(224, 244, 244, 1), rgba(224, 244, 244, 0.05));
 }

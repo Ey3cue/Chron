@@ -139,4 +139,11 @@ Utils.textToHtml = function (text) {
     return $('<div>').text(text).html();
 };
 
+Utils.pixelToLineHeight = {
+    13: 15,
+    14: 17,
+    15: 16,
+    16: 19
+};
+
 })();

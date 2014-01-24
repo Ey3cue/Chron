@@ -134,6 +134,9 @@ OS.Control.clockPulse = function () {
     OS.Kernel.clockPulse();
 
     OS.clock++;
+
+    OS.CpuDisplay.update();
+    OS.MemoryDisplay.update();
 };
 
 OS.Control.trace = function (message) {
