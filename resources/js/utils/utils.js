@@ -69,6 +69,10 @@ defineFunction(String, function varToPhrase() {
     return str[0].toUpperCase() + str.substring(1).toLowerCase();
 });
 
+defineFunction(Number, function toHex(padding) {
+    return this.toString(16).toUpperCase().prepad(padding, '0');
+});
+
 defineFunction(Array, Array.prototype.push, 'enqueue');
 defineFunction(Array, Array.prototype.shift, 'dequeue');
 

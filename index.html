@@ -32,9 +32,13 @@
 
 	<!-- OS -->
 	<script type="text/javascript" src="resources/js/os/host/control.js"></script>
+	<script type="text/javascript" src="resources/js/os/host/memory.js"></script>
+
 	<script type="text/javascript" src="resources/js/os/host/console.js"></script>
 	<script type="text/javascript" src="resources/js/os/host/statusBar.js"></script>
 	<script type="text/javascript" src="resources/js/os/host/log.js"></script>
+	<script type="text/javascript" src="resources/js/os/host/cpuDisplay.js"></script>
+	<script type="text/javascript" src="resources/js/os/host/memoryDisplay.js"></script>
 
 	<script type="text/javascript" src="resources/js/os/os/kernel.js"></script>
 	<script type="text/javascript" src="resources/js/os/os/interrupt.js"></script>
@@ -51,22 +55,24 @@
 </div>
 
 <div id="os">
-	<div id="grid">
-		<div class="col-1-2">
-			<div id="osConsole" class="panel scrollY">
-				<div id="osConsoleOutput"></div>
-				<div id="osConsoleInput"></div>
-			</div>
+	<div class="col-1-2">
+		<div id="osConsole" class="panel scrollY">
+			<div id="osConsoleOutput"></div>
+			<div id="osConsoleInput"></div>
 		</div>
-		<div class="col-1-2">
-			<div id="osStatusBar" class="panel">
-				<div id="osButtonPower" title="Power"></div>
-				<div id="osButtonHalt" title="Halt"></div>
-				<div id="osButtonRestart" title="Restart"></div>
-				<div id="osStatus"></div>
-				<div id="osTime">Thu Jan 16 2014 15.13.24</div>
-			</div>
-			<div id="osLog" class="panel scroll"></div>
+	</div>
+	<div class="col-1-2">
+		<div id="osStatusBar" class="panel">
+			<div id="osButtonPower" title="Power"></div>
+			<div id="osButtonHalt" title="Halt"></div>
+			<div id="osButtonRestart" title="Restart"></div>
+			<div id="osStatus"></div>
+			<div id="osTime"></div>
+		</div>
+		<div id="osLog" class="panel scroll"></div>
+		<div id="osCpuDisplay" class="col-custom"></div>
+		<div id="osMemoryDisplayContainer" class="col-custom scrollY">
+			<div id="osMemoryDisplay"></div>
 		</div>
 	</div>
 </div>

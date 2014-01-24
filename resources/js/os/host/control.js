@@ -1,9 +1,15 @@
 
 OS.Control = {};
 
-OS.CPU_CLOCK_SPEED = 100;
+// Display properties...
+OS.TRANSITION_TIME = 1000; // In milliseconds
+OS.MAXIMUM_LOG_SIZE = 50; // In number of messages
+OS.MEMORY_DISPLAY_ADDRESSES_PER_LINE = 8;
 
-OS.TRANSITION_TIME = 1000;
+// OS properties...
+OS.CPU_CLOCK_SPEED = 100; // In milliseconds
+OS.MEMORY_BLOCK_SIZE = 256; // In bytes
+OS.MEMORY_BLOCKS = 3;
 
 OS.Irq = new Enum(
     'KEYBOARD',
@@ -20,6 +26,12 @@ OS.Status = new Enum(
     'HALTED'
 );
 
+OS.MemoryStatus = new Enum(
+    'NORMAL',
+    'READ',
+    'WRITTEN'
+);
+
 OS.clock = 0;
 OS.cpuClockInterval = null;
 OS.status = OS.Status.SHUTDOWN;
@@ -29,8 +41,12 @@ OS.info = 'ChronOS version 2.0 Alpha by Christopher Cordisco';
 (function () {
 
 OS.Control.init = function () {
+    OS.Memory.init();
+
     OS.StatusBar.init();
     OS.Log.init();
+    OS.CpuDisplay.init();
+    OS.MemoryDisplay.init();
 
     OS.Console.init();
     OS.Shell.init();
@@ -61,6 +77,12 @@ OS.Control.start = function () {
     OS.trace('Starting CPU clock.');
     OS.cpuClockInterval = setInterval(OS.Control.clockPulse, OS.CPU_CLOCK_SPEED);
 
+    OS.trace('Starting CPU display.');
+    OS.CpuDisplay.start();
+
+    OS.trace('Starting memory display.');
+    OS.MemoryDisplay.start();
+
     OS.trace('Starting console.');
     OS.Console.start();
 
@@ -79,6 +101,12 @@ OS.Control.stop = function () {
 
     OS.trace('Shutting down console.');
     OS.Console.stop();
+
+    OS.trace('Shutting down memory display.');
+    OS.MemoryDisplay.stop();
+
+    OS.trace('Shutting down CPU display.');
+    OS.CpuDisplay.stop();
 
     OS.trace('Stopping CPU clock.');
     clearInterval(OS.cpuClockInterval);

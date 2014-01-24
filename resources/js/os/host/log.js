@@ -3,8 +3,6 @@ OS.Log = {};
 
 (function () {
 
-var MAXIMUM_SIZE = 50;
-
 var _$log;
 
 var _lastMessage;
@@ -52,7 +50,7 @@ OS.Log.add = function (message, source) {
         _messageCount++;
     }
 
-    if (_messageCount > MAXIMUM_SIZE) {
+    if (_messageCount > OS.MAXIMUM_LOG_SIZE) {
         $('.entry', _$log).last().remove();
         _$log.perfectScrollbar('update');
         _messageCount--;

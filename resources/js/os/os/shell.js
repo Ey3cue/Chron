@@ -18,6 +18,7 @@ OS.Shell.issueCommand = function (write, input) {
 
     // The command will be the first argument
     var command = args.shift().toLowerCase();
+    trace('Command issued: ' + command);
 
     if (command in _commands) {
         _commands[command].execute(write, args);
@@ -81,13 +82,16 @@ addCommand({
     description: 'Displays your location.',
     funct: function (write) {
         $.ajax({
-            dataType: 'json',
             url: 'http://smart-ip.net/geoip-json?callback=?',
+            dataType: 'json',
             success: function (data) { write(data.host); },
             error: function () { write('Unable to get location.'); }
         });
     }
 });
 
+function trace(message) {
+    OS.log(message, 'Shell');
+}
 
 })();

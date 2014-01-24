@@ -30,11 +30,16 @@
 	width: 25%;
 }
 
-.col-1-8 {
-	width: 12.5%;
+.col-1-5 {
+	width: 20%;
 }
 
-.grid {
+.col-2-5 {
+	width: 40%;
+}
+
+.col-1-8 {
+	width: 12.5%;
 }
 
 .grid:after {

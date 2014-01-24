@@ -93,3 +93,44 @@
     font: 10pt 'Consolas', monospace;
     white-space: nowrap;
 }
+
+/* CPU */
+
+#osCpuDisplay {
+    float: left;
+    width: 18%;
+    opacity: 0;
+    transition: opacity 0.4s;
+}
+
+#osCpuDisplay > div {
+    font-size: 11pt;
+}
+
+#osCpuDisplay .regTitle {
+    float: left;
+    width: 50%;
+    text-align: center;
+}
+
+#osCpuDisplay .regValue {
+    float: right;
+    width: 50%;
+    text-align: center;
+}
+
+/* Memory */
+
+#osMemoryDisplayContainer {
+    float: left;
+    padding-bottom: 0;
+    width: 42%;
+    height: 195px;
+}
+
+#osMemoryDisplay {
+    width: 100%;
+    white-space: pre;
+    opacity: 0;
+    transition: opacity 0.4s;
+}
