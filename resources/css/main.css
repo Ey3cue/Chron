@@ -58,12 +58,19 @@ body {
 	font-weight: bold;
 }
 
-/* Font colors */
-.red    { color: #FF4D4D; }
-.orange { color: #FFA64D; }
-.yellow { color: #FFFF4D; }
-.green  { color: #7AFF4D; }
-.blue   { color: #4D7AFF; }
-.purple { color: #7A4DFF; }
+.em {
+	font-style: italic;
+}
 
-.grey   { opacity: 0.6; }
+/* Font colors */
+.red      { color: #FF4D4D; }
+.orange   { color: #FFA64D; }
+.yellow   { color: #FFFF4D; }
+.green    { color: #7AFF4D; }
+.cyan     { color: #4DFFFF; }
+.cyanBlue { color: #4DD2FF; }
+.blueCyan { color: #4DA6FF; }
+.blue     { color: #4D7AFF; }
+.purple   { color: #7A4DFF; }
+
+.grey     { opacity: 0.6; }

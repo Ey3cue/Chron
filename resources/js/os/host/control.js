@@ -26,14 +26,26 @@ OS.Status = new Enum(
     'HALTED'
 );
 
-OS.MemoryStatus = new Enum(
+OS.MemoryStatus =
+OS.RegisterStatus = new Enum(
     'NORMAL',
     'READ',
     'WRITTEN'
 );
 
+OS.FileStatus = new Enum(0,
+    'AVAILABLE',
+    'OCCUPIED_TEXT', // User data
+    'OCCUPIED_BIN'   // Swap data
+);
+
+// OS variables...
 OS.clock = 0;
 OS.cpuClockInterval = null;
+
+OS.hardDrive = null;
+OS.mbr = null;
+
 OS.status = OS.Status.SHUTDOWN;
 OS.info = 'ChronOS version 2.0 Alpha by Christopher Cordisco';
 
@@ -42,6 +54,9 @@ OS.info = 'ChronOS version 2.0 Alpha by Christopher Cordisco';
 
 OS.Control.init = function () {
     OS.Memory.init();
+
+    OS.hardDrive = new OS.HardDrive();
+    OS.mbr = new OS.File('MBR');
 
     OS.StatusBar.init();
     OS.Log.init();
@@ -60,7 +75,7 @@ OS.Control.activate = function () {
         OS.Control.start();
     }
 };
-var _tei = 0;
+
 OS.Control.toggle = function () {
     if (OS.status === OS.Status.SHUTDOWN) {
         OS.Control.start();
@@ -88,7 +103,7 @@ OS.Control.start = function () {
 
     OS.trace('Bootstrap.');
     OS.Kernel.start();
-    
+
     OS.trace('Started.');
     OS.Control.updateStatus(OS.Status.OPERATING);
 };

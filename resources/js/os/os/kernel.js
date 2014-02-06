@@ -5,12 +5,13 @@ OS.Kernel = {};
 
 var _interruptQueue = null;
 
-
-OS.Kernel.start = OS.Kernel.bootstrap = function () {
+OS.Kernel.start =
+OS.Kernel.bootstrap = function () {
     _interruptQueue = [];
 
     trace('Loading device drivers.');
     OS.KeyboardDriver.start();
+    OS.HardDriveDriver.start();
 
     trace('Starting the shell.');
     OS.Shell.start();
@@ -22,6 +23,7 @@ OS.Kernel.stop = function () {
     OS.Shell.stop();
 
     trace('Unloading device drivers.');
+    OS.HardDriveDriver.stop();
     OS.KeyboardDriver.stop();
 };
 
@@ -45,6 +47,9 @@ function handleInterrupt(interrupt) {
     switch (interrupt.irq) {
     case OS.Irq.KEYBOARD:
         OS.KeyboardDriver.isr(interrupt.params);
+        break;
+    case OS.Irq.HARD_DRIVE:
+        OS.HardDriveDriver.isr(interrupt.params);
         break;
     default:
         trace('Error: Unknown interrupt request.');

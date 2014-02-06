@@ -45,7 +45,7 @@ OS.Console.init = function () {
     // The flashing caret
     _$caret = $('<span class="osConsoleCaret">&#9608;</span>');
     _$consoleInput.append(_$caret);
-    
+
     _$input.focus(function () {
         _$caret.removeClass('osConsoleCaret');
         _caretInterval = setInterval(caretFlash, 500);
@@ -107,6 +107,7 @@ OS.Console.getInputBuffer = function () {
 };
 
 OS.Console.bsod = function () {
+    console.log('BSOD!');
     // TODO
 };
 
@@ -130,8 +131,12 @@ OS.Console.enter = function () {
         var $output = $('<div class="output"></div>');
         _$consoleOutput.append($output);
 
+        // Create a function to pass to the shell, giving that specific command it's own output
+        //   area on the console, contained in the function.
         function write(output) {
-            $output.html(formatOutput(output));
+            $output.html($output.html() + formatOutput(output));
+            // TODO If the user scrolled up to view previous output, this should NOT scroll to the
+            //   bottom.
             scrollToBottom();
         }
 
@@ -151,8 +156,7 @@ function caretFlash() {
 function formatOutput(output) {
     output = Utils.textToHtml(output);
 
-    return output.replace(/`([\w ]+)`/g, '<span class="$1">')
-                 .replace(/``/g, '</span>');
+    return output.replace(/`([\w ]+)`(.*?)``/g, '<span class="$1">$2</span>');
 }
 
 function scrollToBottom() {

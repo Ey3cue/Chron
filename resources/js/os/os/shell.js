@@ -20,6 +20,7 @@ OS.Shell.issueCommand = function (write, input) {
     var command = args.shift().toLowerCase();
     trace('Command issued: ' + command);
 
+    // Execute command if it exists
     if (command in _commands) {
         _commands[command].execute(write, args);
     } else {
@@ -86,6 +87,94 @@ addCommand({
             dataType: 'json',
             success: function (data) { write(data.host); },
             error: function () { write('Unable to get location.'); }
+        });
+    }
+});
+
+addCommand({
+    command: 'format',
+    description: 'Formats the hard drive.',
+    funct: function(write) {
+        OS.Kernel.interrupt(OS.Irq.HARD_DRIVE, {
+            write: write,
+            command: 'format'
+        });
+    }
+});
+
+addCommand({
+    command: 'create',
+    description: '`em cyanBlue`filename`` Creates a file.',
+    funct: function(write, args) {
+        if (args.length) {
+            OS.Kernel.interrupt(OS.Irq.HARD_DRIVE, {
+                write: write,
+                command: 'create',
+                filename: args[0]
+            });
+        } else {
+            write('Usage: `blue`create`` `em cyanBlue`filename``\nPlease supply a filename.');
+        }
+    }
+});
+
+addCommand({
+    command: 'read',
+    description: '`em cyanBlue`filename`` Reads a file.',
+    funct: function(write, args) {
+        if (args.length) {
+            OS.Kernel.interrupt(OS.Irq.HARD_DRIVE, {
+                write: write,
+                command: 'read',
+                filename: args[0]
+            });
+        } else {
+            write('Usage: `blue`read`` `em cyanBlue`filename``\nPlease supply a filename.');
+        }
+    }
+});
+
+addCommand({
+    command: 'write',
+    description: '`em cyanBlue`filename data`` Writes data to a file.',
+    funct: function(write, args) {
+        if (args.length >= 2) {
+            OS.Kernel.interrupt(OS.Irq.HARD_DRIVE, {
+                write: write,
+                command: 'write',
+                filename: args[0],
+                data: args[1]
+            });
+        } else {
+            write('Usage: `blue`write`` `em cyanBlue`filename data``\n' +
+                  'Please supply a filename and data to write.');
+        }
+    }
+});
+
+addCommand({
+    command: 'delete',
+    description: '`em cyanBlue`filename`` Deletes a file.',
+    funct: function(write, args) {
+        if (args.length) {
+            OS.Kernel.interrupt(OS.Irq.HARD_DRIVE, {
+                write: write,
+                command: 'delete',
+                filename: args[0]
+            });
+        } else {
+            write('Usage: `blue`delete`` `em cyanBlue`filename``\nPlease supply a filename.');
+        }
+    }
+});
+
+addCommand({
+    command: 'ls',
+    description: 'Lists all files.',
+    funct: function(write) {
+        OS.Kernel.interrupt(OS.Irq.HARD_DRIVE, {
+            write: write,
+            command: 'list'
         });
     }
 });
