@@ -65,12 +65,10 @@ OS.File.prototype.setWithFileString = function (fileStr) {
     fileStr = fileStr.replace(/\s+/g, '');
 
     this.status = OS.FileStatus.fromId(parseInt(fileStr.substr(0, 2), 16));
-    console.log(fileStr);
-    console.log(this.status);
     this.linkedTrack = parseInt(fileStr.substr(2, 2), 16);
     this.linkedSector = parseInt(fileStr.substr(4, 2), 16);
     this.linkedBlock = parseInt(fileStr.substr(6, 2), 16);
-    this.data = OS.File.revertData(fileStr.substr(8));
+    this.data = revertData(fileStr.substr(8));
 };
 
 /**
@@ -111,7 +109,7 @@ OS.File.prototype.setData = function (data, isBinaryData) {
         if (data.length % 2 === 1)
             throw "Binary data must be a whole number of bytes.";
 
-        this.data = OS.File.revertData(data);
+        this.data = revertData(data);
         this.status = OS.FileStatus.OCCUPIED_BIN;
     // Text
     } else {
@@ -132,7 +130,7 @@ OS.File.prototype.getData = function () {
     }
 
     if (this.status === OS.FileStatus.OCCUPIED_BIN) {
-        return OS.File.convertData(this.data)[0];
+        return convertData(this.data)[0];
     }
 
     return null;
@@ -173,7 +171,7 @@ OS.File.prototype.toFileString = function () {
     str += this.linkedSector.toString(16).prepad(2, '0');
     str += this.linkedBlock.toString(16).prepad(2, '0');
 
-    var data = OS.File.convertData(this.data);
+    var data = convertData(this.data);
 
     return str + data[0];
 };
@@ -206,7 +204,7 @@ OS.File.prototype.deleteFromDrive = function (hardDrive) {
  * @return {Array} an array of data strings to be stored on the hard drive. The array will only be
  *     of size 1 if the data does not exceed the block size.
  */
-OS.File.convertData = function (data, isBinaryData) {
+function convertData(data, isBinaryData) {
     data += '\0'; // Null terminate
 
     var maxLength = isBinaryData ? OS.File.DATA_SIZE * 4 : OS.File.DATA_SIZE * 2; // 2 Hex chars per byte
@@ -226,9 +224,7 @@ OS.File.convertData = function (data, isBinaryData) {
     convertedArray.push(convertedData);
 
     return convertedArray;
-};
-
-})();
+}
 
 /**
  * Reverts the hard drive data string for a file to a string representation.
@@ -237,7 +233,7 @@ OS.File.convertData = function (data, isBinaryData) {
  *
  * @return {String} data the reverted data
  */
-OS.File.revertData = function (data) {
+function revertData(data) {
     var revertedData = '';
 
     for (var i = 0; i < data.length; i += 2) {
@@ -245,7 +241,7 @@ OS.File.revertData = function (data) {
     }
 
     return revertedData;
-};
+}
 
 /**
  * Returns an array of chained files representing the specified data.
@@ -256,11 +252,11 @@ OS.File.revertData = function (data) {
  * @return {Array} the chained files representing the data.
  */
 OS.File.filesFromData = function (data, isBinaryData) {
-    var dataParts = OS.File.convertData(data, isBinaryData);
+    var dataParts = convertData(data, isBinaryData);
     var files = [];
 
     for (var i = 0; i < dataParts.length; i++) {
-        files.push(new OS.File(OS.File.revertData(dataParts[i]), isBinaryData));
+        files.push(new OS.File(revertData(dataParts[i]), isBinaryData));
     }
 
     return files;
@@ -279,3 +275,5 @@ OS.File.fileFromStr = function (fileStr) {
 
     return file;
 };
+
+})();
