@@ -74,6 +74,7 @@ OS.Console.stop = function () {
 
 OS.Console.clear = function () {
     _$consoleOutput.html('');
+    scrollToTop();
 };
 
 function input(event) {
@@ -161,6 +162,11 @@ function formatOutput(output) {
 
 function scrollToBottom() {
     _$console.scrollTop(_$consoleOutput.height() + _$consoleInput.height());
+    _$console.perfectScrollbar('update');
+}
+
+function scrollToTop() {
+    _$console.scrollTop(0);
     _$console.perfectScrollbar('update');
 }
 

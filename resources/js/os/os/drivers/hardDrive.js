@@ -23,8 +23,7 @@ OS.HardDriveDriver.isr = function (params) {
     // Console write function
     var write = params.write;
 
-/*
-    try {*/
+    try {
         switch (params.command) {
         // Shell commands
         case 'create':
@@ -65,13 +64,13 @@ OS.HardDriveDriver.isr = function (params) {
         default:
             OS.Kernel.trapError('Invalid HDD Driver command.');
         }
-    /*} catch (e) {
+    } catch (e) {
         if (!(/swap/).test(params.command)) {
             write(e);
         } else {
             Kernel.trace('Swap file error: ' + e);
         }
-    }*/
+    }
 };
 
 /**
