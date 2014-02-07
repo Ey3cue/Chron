@@ -30,22 +30,24 @@
 	<script type="text/javascript" src="resources/js/utils/utils.js"></script>
 	<script type="text/javascript" src="resources/js/utils/enum.js"></script>
 
-	<!-- OS -->
+	<!-- Operating System -->
+	<!-- Host -->
 	<script type="text/javascript" src="resources/js/os/host/control.js"></script>
 	<script type="text/javascript" src="resources/js/os/host/memory.js"></script>
 	<script type="text/javascript" src="resources/js/os/host/hardDrive.js"></script>
-
 	<script type="text/javascript" src="resources/js/os/host/console.js"></script>
 	<script type="text/javascript" src="resources/js/os/host/statusBar.js"></script>
 	<script type="text/javascript" src="resources/js/os/host/log.js"></script>
-	<script type="text/javascript" src="resources/js/os/host/cpuDisplay.js"></script>
-	<script type="text/javascript" src="resources/js/os/host/memoryDisplay.js"></script>
-
+	<!-- Host displays -->
+	<script type="text/javascript" src="resources/js/os/host/display/cpu.js"></script>
+	<script type="text/javascript" src="resources/js/os/host/display/memory.js"></script>
+	<script type="text/javascript" src="resources/js/os/host/display/hardDrive.js"></script>
+	<!-- OS -->
 	<script type="text/javascript" src="resources/js/os/os/kernel.js"></script>
 	<script type="text/javascript" src="resources/js/os/os/interrupt.js"></script>
 	<script type="text/javascript" src="resources/js/os/os/shell.js"></script>
 	<script type="text/javascript" src="resources/js/os/os/file.js"></script>
-
+	<!-- OS Drivers -->
 	<script type="text/javascript" src="resources/js/os/os/drivers/keyboard.js"></script>
 	<script type="text/javascript" src="resources/js/os/os/drivers/hardDrive.js"></script>
 </head>
@@ -74,6 +76,9 @@
 		<div id="osCpuDisplay" class="col-custom"></div>
 		<div id="osMemoryDisplayContainer" class="col-custom scrollY">
 			<div id="osMemoryDisplay"></div>
+		</div>
+		<div id="osHardDriveDisplayContainer" class="col-custom scrollY">
+			<div id="osHardDriveDisplay"></div>
 		</div>
 	</div>
 </div>

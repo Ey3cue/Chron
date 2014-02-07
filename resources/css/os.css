@@ -141,3 +141,18 @@
     height: 1px;
     background: linear-gradient(90deg, rgba(224, 244, 244, 0.05), rgba(224, 244, 244, 1), rgba(224, 244, 244, 0.05));
 }
+
+/* Hard Drive */
+
+#osHardDriveDisplayContainer {
+    float: left;
+    padding-bottom: 0;
+    width: 40%;
+    height: 195px;
+}
+
+#osHardDriveDisplay {
+    width: 100%;
+    white-space: pre;
+    text-align: center;
+}

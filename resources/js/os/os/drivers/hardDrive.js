@@ -27,38 +27,38 @@ OS.HardDriveDriver.isr = function (params) {
         switch (params.command) {
         // Shell commands
         case 'create':
-            OS.HardDriveDriver.createFile(params.filename);
+            createFile(params.filename);
             write('File created.');
             break;
         case 'read':
-            write(OS.HardDriveDriver.readFile(params.filename));
+            write(readFile(params.filename));
             break;
         case 'write':
-            OS.HardDriveDriver.writeFile(params.filename, params.data);
+            writeFile(params.filename, params.data);
             write('File written.');
             break;
         case 'delete':
-            OS.HardDriveDriver.deleteFile(params.filename);
+            deleteFile(params.filename);
             write('File deleted.');
             break;
         case 'list':
-            OS.HardDriveDriver.listFiles(write);
+            listFiles(write);
             break;
         case 'format':
-            OS.HardDriveDriver.format();
+            format();
             write('Format successful.');
             break;
 
         // Swap commands
         case 'swap-write':
-            OS.HardDriveDriver.createFile(params.filename, true);
-            OS.HardDriveDriver.writeFile(params.filename, params.data, true);
+            createFile(params.filename, true);
+            writeFile(params.filename, params.data, true);
             break;
         case 'swap-read':
             OS.HardDriveDriver.buffer = OS.HardDriveDriver.read(params.filename);
             break;
         case 'swap-delete':
-            OS.HardDriveDriver.deleteFile(params.filename);
+            deleteFile(params.filename);
             break;
 
         default:
@@ -79,13 +79,13 @@ OS.HardDriveDriver.isr = function (params) {
  * @param {String} filename the file
  * @param {Boolean} forSwap true if this operation is for swapping
  */
-OS.HardDriveDriver.createFile = function (filename, forSwap) {
+function createFile(filename, forSwap) {
     trace('Creating file: ' + filename);
 
     try {
-        var filenameFile = OS.HardDriveDriver.findFile(filename);
+        var filenameFile = findFile(filename);
     } catch (e) {
-        var file = OS.HardDriveDriver.findFreeFile();
+        var file = findFreeFile();
         file.setData(filename);
         file.setLinkedTSB(0, 0, 0);
         file.writeToDrive(OS.hardDrive);
@@ -95,39 +95,39 @@ OS.HardDriveDriver.createFile = function (filename, forSwap) {
     if (!forSwap) {
         throw 'Error: File already exists.';
     }
-};
+}
 
 /**
  * Reads the specified file.
  *
  * @param filename the file
  */
-OS.HardDriveDriver.readFile = function (filename) {
+function readFile(filename) {
     trace('Reading file: ' + filename);
 
-    var filenameFile = OS.HardDriveDriver.findFile(filename);
+    var filenameFile = findFile(filename);
 
     if (!filenameFile.isLinked()) {
         throw 'File contains nothing.';
     }
 
-    var contentsFile = OS.HardDriveDriver.getLinkedFile(filenameFile);
+    var contentsFile = getLinkedFile(filenameFile);
     var contents = contentsFile.getData();
 
     while (contentsFile.isLinked()) {
-        contentsFile = OS.HardDriveDriver.getLinkedFile(contentsFile);
+        contentsFile = getLinkedFile(contentsFile);
         contents += contentsFile.getData();
     }
 
     return contents;
-};
+}
 
 /**
  * Writes data to the specified file (overwrites; does not append).
  *
  * @param filename the file
  */
-OS.HardDriveDriver.writeFile = function (filename, data, binaryData) {
+function writeFile(filename, data, binaryData) {
     trace('Writing to file: ' + filename + ' ' + data);
 
     /*
@@ -138,9 +138,9 @@ OS.HardDriveDriver.writeFile = function (filename, data, binaryData) {
      * foundFiles - an array of the final file objects found to store the file's contents
      */
 
-    var filenameFile = OS.HardDriveDriver.findFile(filename);
+    var filenameFile = findFile(filename);
 
-    OS.HardDriveDriver.deleteFileChain(filenameFile);
+    deleteFileChain(filenameFile);
 
     var files = OS.File.filesFromData(data, binaryData);
 
@@ -174,22 +174,22 @@ OS.HardDriveDriver.writeFile = function (filename, data, binaryData) {
 
     // Write the last file.
     foundFiles[foundFiles.length - 1].writeToDrive(OS.hardDrive);
-};
+}
 
 /**
  * Deletes the specified file.
  *
  * @param filename the file
  */
-OS.HardDriveDriver.deleteFile = function (filename) {
+function deleteFile(filename) {
     trace('Deleting file: ' + filename);
 
     if (filename === 'MBR') {
         throw 'Cannot delete MBR.';
     }
 
-    OS.HardDriveDriver.deleteFileChain(OS.HardDriveDriver.findFile(filename), true);
-};
+    deleteFileChain(findFile(filename), true);
+}
 
 /**
  * Deletes (sets as available) the chain of files starting with the specified file.
@@ -197,7 +197,7 @@ OS.HardDriveDriver.deleteFile = function (filename) {
  * @param {File} file the first file of the chain to delete
  * @param {Boolean} inclusive true if the first file in the chain should also be deleted.
  */
-OS.HardDriveDriver.deleteFileChain = function (file, inclusive) {
+function deleteFileChain(file, inclusive) {
     if (inclusive) {
         file.deleteFromDrive(OS.hardDrive);
     }
@@ -206,19 +206,19 @@ OS.HardDriveDriver.deleteFileChain = function (file, inclusive) {
         return;
     }
 
-    var nextFile = OS.HardDriveDriver.getFile(file.linkedTrack, file.linkedSector, file.linkedBlock);
+    var nextFile = getFile(file.linkedTrack, file.linkedSector, file.linkedBlock);
     nextFile.deleteFromDrive(OS.hardDrive);
 
     while (nextFile.isLinked()) {
-        nextFile = OS.HardDriveDriver.getFile(nextFile.linkedTrack, nextFile.linkedSector, nextFile.linkedBlock);
+        nextFile = getFile(nextFile.linkedTrack, nextFile.linkedSector, nextFile.linkedBlock);
         nextFile.deleteFromDrive(OS.hardDrive);
     }
-};
+}
 
 /**
  * Lists the files to the console.
  */
-OS.HardDriveDriver.listFiles = function (write) {
+function listFiles(write) {
     var iterator = new HardDriveIterator(OS.hardDrive), element, file;
     iterator.setTermination(0, 7, 7);
 
@@ -228,12 +228,12 @@ OS.HardDriveDriver.listFiles = function (write) {
             write(file.getData() + '\n');
         }
     }
-};
+}
 
 /**
  * Formats the hard drive (i.e. zero-fills it).
  */
-OS.HardDriveDriver.format = function () {
+function format() {
     trace('Formatting hard drive...');
 
     var t, s, b;
@@ -247,7 +247,7 @@ OS.HardDriveDriver.format = function () {
     }
 
     OS.hardDrive.write(0, 0, 0, OS.mbr.toFileString());
-};
+}
 
 /**
  * Finds and returns the specified file.
@@ -256,7 +256,7 @@ OS.HardDriveDriver.format = function () {
  *
  * @return {File} the file
  */
-OS.HardDriveDriver.findFile = function (filename) {
+function findFile(filename) {
     var iterator = new HardDriveIterator(OS.hardDrive), element, file, currentFilename;
     iterator.setTermination(0, 7, 7);
 
@@ -271,7 +271,7 @@ OS.HardDriveDriver.findFile = function (filename) {
     }
 
     throw 'File not found: ' + filename;
-};
+}
 
 /**
  * Returns the file located at the TSB of this driver's hard drive or null if the file doesn't exist.
@@ -282,7 +282,7 @@ OS.HardDriveDriver.findFile = function (filename) {
  *
  * @return {File} the file
  */
-OS.HardDriveDriver.getFile = function (track, sector, block) {
+function getFile(track, sector, block) {
     try {
         var file = OS.File.fileFromStr(OS.hardDrive.read(track, sector, block));
         file.setTSB(track, sector, block);
@@ -290,7 +290,7 @@ OS.HardDriveDriver.getFile = function (track, sector, block) {
     } catch (e) {
         return null;
     }
-};
+}
 
 /**
  * Returns the file linked from the specified file.
@@ -299,7 +299,7 @@ OS.HardDriveDriver.getFile = function (track, sector, block) {
  *
  * @return {File} the linked file
  */
-OS.HardDriveDriver.getLinkedFile = function (file) {
+function getLinkedFile(file) {
     try {
         var linkedFile = OS.File.fileFromStr(OS.hardDrive.read(file.linkedTrack, file.linkedSector, file.linkedBlock));
         linkedFile.setTSB(file.linkedTrack, file.linkedSector, file.linkedBlock);
@@ -307,16 +307,18 @@ OS.HardDriveDriver.getLinkedFile = function (file) {
     } catch (e) {
         return null;
     }
-};
+}
 
 /**
  * Finds and return the first free file space to store a file name in the main directory.
  *
  * @return {File} the first free file space
  */
-OS.HardDriveDriver.findFreeFile = function () {
-    var iterator = new HardDriveIterator(OS.hardDrive), element, file;
+function findFreeFile() {
+    var iterator = new HardDriveIterator(OS.hardDrive);
     iterator.setTermination(0, 7, 7); // Directory is the first track
+
+    var element, file;
 
     while ((element = iterator.next())) {
         file = OS.File.fileFromStr(element);
@@ -328,7 +330,7 @@ OS.HardDriveDriver.findFreeFile = function () {
     }
 
     throw 'Cannot create file; directory full.';
-};
+}
 
 /**
  * Returns the contents of the hard drive. For display purposes only.
