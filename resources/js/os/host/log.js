@@ -6,6 +6,7 @@ OS.Log = {};
 var _$log;
 
 var _lastMessage;
+var _lastSource;
 var _messageRepeatCount;
 var _messageCount;
 
@@ -26,7 +27,7 @@ OS.Log.start = function () {};
 OS.Log.stop = function () {};
 
 OS.Log.add = function (message, source) {
-    if (_lastMessage === message) {
+    if (_lastMessage === message && _lastSource === source) {
         $('.time', _$lastEntry).html(getCurrentDateStamp());
         $('.clock', _$lastEntry).html(parseClock());
         $('.repeats', _$lastEntry).html('[' + (++_messageRepeatCount) + '] ');
@@ -47,6 +48,7 @@ OS.Log.add = function (message, source) {
 
         _messageRepeatCount = 1;
         _lastMessage = message;
+        _lastSource = source;
         _messageCount++;
     }
 
