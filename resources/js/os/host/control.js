@@ -62,6 +62,7 @@ OS.Control.init = function () {
     OS.Log.init();
     OS.CpuDisplay.init();
     OS.MemoryDisplay.init();
+    OS.HardDriveDisplay.init();
 
     OS.Console.init();
     OS.Shell.init();
@@ -98,6 +99,9 @@ OS.Control.start = function () {
     OS.trace('Starting memory display.');
     OS.MemoryDisplay.start();
 
+    OS.trace('Starting hard drive display.');
+    OS.HardDriveDisplay.start();
+
     OS.trace('Starting console.');
     OS.Console.start();
 
@@ -116,6 +120,9 @@ OS.Control.stop = function () {
 
     OS.trace('Shutting down console.');
     OS.Console.stop();
+
+    OS.trace('Shutting down hard drive display.');
+    OS.HardDriveDisplay.stop();
 
     OS.trace('Shutting down memory display.');
     OS.MemoryDisplay.stop();

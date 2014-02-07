@@ -50,8 +50,8 @@ OS.File = function (data, isBinaryData) {
 };
 
 // The maximum size of the data per block in bytes. For now, 4 is a magic number, relying on the
-//   number of tracks, sectors, and blocks per to be 4, 8, and 8, respectively.
-OS.File.DATA_SIZE = OS.HardDrive.BLOCK_SIZE - 4;
+//   number of tracks, sectors, and blocks per to be 4, 8, and 8, respectively. TODO Fix
+OS.File.DATA_SIZE = /*OS.HardDrive.BLOCK_SIZE*/ 64 - 4;
 
 /**
  * Sets this file's data with the string read directly from the hard drive.
