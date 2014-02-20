@@ -54,6 +54,12 @@ body {
 	content: 'Coming soon...';
 }
 
+.disabled,
+.disabled:hover {
+    opacity: 0.25 !important;
+    cursor: default !important;
+}
+
 .bold {
 	font-weight: bold;
 }
@@ -73,4 +79,4 @@ body {
 .blue     { color: #4D7AFF; }
 .purple   { color: #7A4DFF; }
 
-.grey     { opacity: 0.6; }
+.grey     { color: #8E8E8E; }

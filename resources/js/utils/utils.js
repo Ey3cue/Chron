@@ -9,7 +9,7 @@ function defineFunction(obj, funct, name) {
     if (obj.prototype.hasOwnProperty(name)) {
         console.warn('WARNING: PREDEFINED PROPERTY POSSIBLY OVERWRITTEN: ' + obj.name + ': ' + name);
     }
-    
+
     Object.defineProperty(obj.prototype, name, { value: funct });
 }
 
@@ -20,20 +20,20 @@ defineFunction(String, function contains(characters) {
 defineFunction(String, function prepad(length, character) {
     character = character || ' ';
     var str = this.toString();
-    
+
     while (str.length < length)
         str = character + str;
-    
+
     return str;
 });
 
 defineFunction(String, function pad(length, character) {
     character = character || ' ';
     var str = this.toString();
-    
+
     while (str.length < length)
         str += character;
-    
+
     return str;
 });
 
@@ -63,14 +63,15 @@ defineFunction(String, function varToPhrase() {
     } else if (str === str.toUpperCase()) {
         return str[0].toUpperCase() + str.substring(1).toLowerCase();
     }
-    
+
     // Convert variable style to phrase
     str = str.replace(/([A-Z])/g, ' $1');
     return str[0].toUpperCase() + str.substring(1).toLowerCase();
 });
 
 defineFunction(Number, function toHex(padding) {
-    return this.toString(16).toUpperCase().prepad(padding, '0');
+    return padding ? this.toString(16).toUpperCase().prepad(padding, '0') :
+                     this.toString(16).toUpperCase();
 });
 
 defineFunction(Array, Array.prototype.push, 'enqueue');
@@ -80,7 +81,7 @@ Utils.bidirectional = function (obj) {
     for (var key in obj) {
         obj[obj[key]] = key;
     }
-    
+
     return obj;
 };
 
@@ -101,13 +102,13 @@ Utils.number = function (obj, start) {
     for (var key in obj) {
         obj[key] = id++;
     }
-    
+
     return obj;
 };
 
 /**
- * Returns an object of the URL parameters. 
- * 
+ * Returns an object of the URL parameters.
+ *
  * Adapted from http://stackoverflow.com/questions/979975/how-to-get-the-value-from-url-parameter
  *
  * @return {Object} an object of the URL parameters
@@ -118,7 +119,7 @@ Utils.getUrlParameters = function () {
 
     for (var i = 0; i < vars.length; i++) {
         var pair = vars[i].split('=');
-        
+
         // If first entry with this name
         if (typeof params[pair[0]] === 'undefined') {
             params[pair[0]] = pair[1];
@@ -148,7 +149,7 @@ Utils.pixelToLineHeight = {
 
 /**
  * Returns true if HTML5 local storage is supported.
- * 
+ *
  * @return {Boolean} true if HTML5 local storage is supported
  */
 Utils.html5StorageSupported = function () {

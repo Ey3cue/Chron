@@ -71,6 +71,8 @@ OS.HardDriveDriver.isr = function (params) {
             Kernel.trace('Swap file error: ' + e);
         }
     }
+
+    OS.HardDriveDisplay.update();
 };
 
 /**

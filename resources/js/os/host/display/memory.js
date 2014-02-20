@@ -53,8 +53,10 @@ OS.MemoryDisplay.update = function () {
         // Check if adding new line
         if (i % OS.MEMORY_DISPLAY_ADDRESSES_PER_LINE === 0) {
             // Add new line if i is not 0 and it's not the beginning of a new block
-            html += (i && !isNewBlockBeginning ? '\n' : '') +
-                    '0x' + i.toHex(3); // Current address
+            html += '<span class="grey">' +
+                    (i && !isNewBlockBeginning ? '\n' : '') +
+                    '0x' + i.toHex(3) + // Current address
+                    '</span>';
         }
 
         // statuses holds the proper enum type; call the formatWord function defined below to format

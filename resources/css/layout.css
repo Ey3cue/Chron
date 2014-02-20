@@ -63,6 +63,11 @@
 	overflow: hidden;
 }
 
+.scrollContainer {
+	max-width: 100%;
+	max-height: 100%;
+}
+
 .title {
 	position: relative;
 	text-align: center;

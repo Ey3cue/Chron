@@ -204,7 +204,7 @@ OS.File.prototype.deleteFromDrive = function (hardDrive) {
  * @return {Array} an array of data strings to be stored on the hard drive. The array will only be
  *     of size 1 if the data does not exceed the block size.
  */
-function convertData(data, isBinaryData) {
+var convertData = OS.File.convertData = function (data, isBinaryData) {
     data += '\0'; // Null terminate
 
     var maxLength = isBinaryData ? OS.File.DATA_SIZE * 4 : OS.File.DATA_SIZE * 2; // 2 Hex chars per byte
@@ -224,7 +224,7 @@ function convertData(data, isBinaryData) {
     convertedArray.push(convertedData);
 
     return convertedArray;
-}
+};
 
 /**
  * Reverts the hard drive data string for a file to a string representation.
@@ -233,15 +233,15 @@ function convertData(data, isBinaryData) {
  *
  * @return {String} data the reverted data
  */
-function revertData(data) {
+var revertData = OS.File.revertData = function (data) {
     var revertedData = '';
 
     for (var i = 0; i < data.length; i += 2) {
         revertedData += String.fromCharCode(parseInt(data.substr(i, 2), 16));
     }
 
-    return revertedData;
-}
+    return revertedData.replace(/\0+/g, '');
+};
 
 /**
  * Returns an array of chained files representing the specified data.
