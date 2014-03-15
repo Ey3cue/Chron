@@ -22,11 +22,8 @@ var _memory;
 var _statuses;
 
 OS.Memory.init = function () {
-    _memory = new Array(MEMORY_SIZE);
-    _statuses = new Array(MEMORY_SIZE);
-
-    OS.Memory.memory = _memory;
-    OS.Memory.statuses = _statuses;
+    OS.Memory.memory = _memory = new Array(MEMORY_SIZE);
+    OS.Memory.statuses = _statuses = new Array(MEMORY_SIZE);
 
     for (var i = 0; i < MEMORY_SIZE; i++) {
         _memory[i] = 0;
@@ -34,8 +31,21 @@ OS.Memory.init = function () {
     }
 };
 
+OS.Memory.read = function (address) {
+    _statuses[address] = OS.MemoryStatus.READ;
+    return _memory[address];
+};
 
+OS.Memory.write = function (address, data) {
+    _statuses[address] = OS.MemoryStatus.WRITTEN;
+    _memory[address] = data;
+};
 
-
+OS.Memory.resetStatuses = function () {
+    var normalStatus = OS.MemoryStatus.NORMAL;
+    for (var i = _statuses.length - 1; i >= 0; i--) {
+        _statuses[i] = normalStatus;
+    }
+};
 
 })();

@@ -19,6 +19,15 @@ body {
 	transition: opacity 2s;
 }
 
+textarea {
+	background-color: #141414;
+	border: none;
+	color: #E0E0E0;
+	resize: none;
+	font: 13px Consolas, monospace;
+	overflow: auto;
+}
+
 .spacer {
 	clear: both;
 }

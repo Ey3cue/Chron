@@ -8,8 +8,18 @@ OS.MEMORY_DISPLAY_ADDRESSES_PER_LINE = 8;
 
 // OS properties...
 OS.CPU_CLOCK_SPEED = 100; // In milliseconds
+
 OS.MEMORY_BLOCK_SIZE = 256; // In bytes
 OS.MEMORY_BLOCKS = 3;
+
+OS.DEFAULT_PRIORITY = Number.MAX_VALUE;
+OS.DEFAULT_SCHEDULING_QUATUM = 6;
+
+OS.Status = new Enum(
+    'SHUTDOWN',
+    'OPERATING',
+    'HALTED'
+);
 
 OS.Irq = new Enum(
     'KEYBOARD',
@@ -20,10 +30,18 @@ OS.Irq = new Enum(
     'HARD_DRIVE'
 );
 
-OS.Status = new Enum(
-    'SHUTDOWN',
-    'OPERATING',
-    'HALTED'
+OS.SchedulingMode = new Enum(
+    'ROUND_ROBIN',
+    'FCFS',
+    'PRIORITY'
+);
+
+OS.ProcessStatus = new Enum(
+    'NEW',
+    'RESIDENT',
+    'READY',
+    'RUNNING',
+    'TERMINATED'
 );
 
 OS.MemoryStatus =
@@ -47,7 +65,7 @@ OS.hardDrive = null;
 OS.mbr = null;
 
 OS.status = OS.Status.SHUTDOWN;
-OS.info = 'ChronOS version 2.0 Alpha by Christopher Cordisco';
+OS.info = 'ChronOS version 2.0 by Christopher Cordisco';
 
 
 (function () {
@@ -63,8 +81,13 @@ OS.Control.init = function () {
     OS.CpuDisplay.init();
     OS.MemoryDisplay.init();
     OS.HardDriveDisplay.init();
+    OS.ProcessesDisplay.init();
+    OS.ProgramInput.init();
 
     OS.Console.init();
+
+    OS.Cpu.init();
+    OS.MemoryManager.init();
     OS.Shell.init();
 
     OS.log = OS.Log.add;
@@ -102,6 +125,12 @@ OS.Control.start = function () {
     OS.trace('Starting hard drive display.');
     OS.HardDriveDisplay.start();
 
+    OS.trace('Starting processes display.');
+    OS.ProcessesDisplay.start();
+
+    OS.trace('Starting program input.');
+    OS.ProgramInput.start();
+
     OS.trace('Starting console.');
     OS.Console.start();
 
@@ -120,6 +149,12 @@ OS.Control.stop = function () {
 
     OS.trace('Shutting down console.');
     OS.Console.stop();
+
+    OS.trace('Shutting down the program input.');
+    OS.ProgramInput.stop();
+
+    OS.trace('Shutting down the processes display.');
+    OS.ProcessesDisplay.stop();
 
     OS.trace('Shutting down hard drive display.');
     OS.HardDriveDisplay.stop();
@@ -159,6 +194,7 @@ OS.Control.clockPulse = function () {
 
     OS.CpuDisplay.update();
     OS.MemoryDisplay.update();
+    OS.ProcessesDisplay.update();
 };
 
 OS.Control.trace = function (message) {

@@ -47,6 +47,7 @@ OS.Console.init = function () {
     _$consoleInput.append(_$caret);
 
     _$input.focus(function () {
+        clearInterval(_caretInterval);
         _$caret.removeClass('osConsoleCaret');
         _caretInterval = setInterval(caretFlash, 500);
     }).blur(function () {
@@ -65,6 +66,8 @@ OS.Console.start = function () {
 
     _$console.css('opacity', 1);
     _$input.on('keydown', input);
+
+    scrollToTop();
 };
 
 OS.Console.stop = function () {
@@ -75,6 +78,11 @@ OS.Console.stop = function () {
 OS.Console.clear = function () {
     _$consoleOutput.html('');
     scrollToTop();
+};
+
+OS.Console.setPrompt = function (prompt) {
+    _prompt = prompt;
+    _$prompt.html(prompt);
 };
 
 function input(event) {
@@ -126,28 +134,28 @@ OS.Console.backspace = function () {
 };
 
 OS.Console.enter = function () {
-    _$consoleOutput.append('<div class="grey">' + _prompt + _$input.html() + '</div>');
+    _$consoleOutput.append('<div class="input">' + _prompt + _$input.html() + '</div>');
 
     if (_inputText.length) {
-        var $output = $('<div class="output"></div>');
-        _$consoleOutput.append($output);
-
-        // Create a function to pass to the shell, giving that specific command it's own output
-        //   area on the console, contained in the function.
-        function write(output) {
-            $output.html($output.html() + formatOutput(output));
-            // TODO If the user scrolled up to view previous output, this should NOT scroll to the
-            //   bottom.
-            scrollToBottom();
-        }
-
-        OS.Shell.issueCommand(write, _inputText);
+        OS.Shell.issueCommand(getWriteFunction(), _inputText);
 
         _inputText = '';
         _$input.text('');
     }
 
     scrollToBottom();
+};
+
+var getWriteFunction = OS.Console.getWriteFunction = function () {
+    var $output = $('<div class="output"></div>');
+    _$consoleOutput.append($output);
+
+    return function (output) {
+        $output.html($output.html() + formatOutput(output));
+        // TODO If the user scrolled up to view previous output, this should NOT scroll to the
+        //   bottom.
+        scrollToBottom();
+    };
 };
 
 function caretFlash() {

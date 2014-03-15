@@ -19,6 +19,7 @@ Layout.init = function () {
     MainTabs.add('ChronIS.CPU', 'The Processor', CPU_ID);
 
     Layout.initScrollers();
+    Layout.initTooltips();
 
     $('body').css('opacity', 1);
 };
@@ -34,6 +35,13 @@ Layout.initScrollers = function () {
     });
     $('.scroll').perfectScrollbar({
         wheelSpeed: 30
+    });
+};
+
+Layout.initTooltips = function () {
+    $('[tooltip]').each(function (index, element) {
+        var $element = $(element);
+        $element.append('<div class="tooltip">' + $element.attr('tooltip') + '</div>');
     });
 };
 
@@ -112,7 +120,7 @@ var MainContents = {
 };
 
 MainContents.init = function () {
-    
+
 };
 
 MainContents.add = function (id) {

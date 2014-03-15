@@ -69,13 +69,140 @@ defineFunction(String, function varToPhrase() {
     return str[0].toUpperCase() + str.substring(1).toLowerCase();
 });
 
+defineFunction(String, function toCodeString() {
+    var str = this.toString();
+    var codeStr = '';
+
+    for (var i = 0; i < str.length; i++) {
+        codeStr += str.charCodeAt(i) + ' ';
+    }
+
+    return codeStr;
+});
+
 defineFunction(Number, function toHex(padding) {
     return padding ? this.toString(16).toUpperCase().prepad(padding, '0') :
                      this.toString(16).toUpperCase();
 });
 
+/**
+ * Gives the ROT13 obfuscation of this string.
+ *
+ * Adapted from http://jsfromhell.com/string/rot13
+ *
+ * @return {String} the ROT13 abfuscation
+ */
+defineFunction(String, function rot13() {
+    return this.replace(/[a-zA-Z]/g, function (c) {
+        return String.fromCharCode((c <= "Z" ? 90 : 122) >= (c = c.charCodeAt(0) + 13) ? c : c - 26);
+    });
+});
+
+/**
+ * Converts the given integer to the two's complement representation.
+ *
+ * For e.g. 0xF7 is -9 represented in two's complement using 1 byte.
+ *
+ * (JavaScript's numbers are 64 bits until a bitwise operator is used on them, then they are
+ *  converted to 32 bits).
+ *
+ * let x = -9, and n = 8 bits
+ *
+ * -x    = 0000 0000 0000 0000 0000 0000 0000 1001
+ *       -                                       1 (subtract 1)
+ *       = 0000 0000 0000 0000 0000 0000 0000 1000
+ *       | 1111 1111 1111 1111 1111 1111 0000 0000 (| with ~(2^n - 1))
+ *       = 1111 1111 1111 1111 1111 1111 0000 1000
+ * ~x    = 0000 0000 0000 0000 0000 0000 1111 0111 = 0xF7
+ *
+ * @param {Number} integer the integer to convert
+ * @param {Number} numberBytes the number of bytes representing the number (defaults to 1 if not
+ *     specified)
+ */
+defineFunction(Number, function toTwosComplement(numberBytes) {
+    var integer = this + 0; // Adding a zero treats it as a number instead of a JS object
+
+    if (integer % 1 !== 0) {
+        return;
+    }
+
+    var numberBits = (numberBytes || 1) * 8;
+
+    // Ensure it's in range given the number of bits
+    if (integer < (-(1 << (numberBits - 1))) || integer > ((1 << (numberBits - 1)) - 1))
+        throw 'Integer out of range given ' + numberBytes + ' byte(s) to represent.';
+
+    // If non-negative, return the value
+    if (integer >= 0)
+        return integer;
+
+    // Else negative, convert to two's complement representation
+    return ~(((-integer) - 1) | ~((1 << numberBits) - 1));
+});
+
+/**
+ * Converts the given two's complement representation to the represented integer.
+ *
+ * For e.g. 0xF7 is -9 represented in two's complement using 1 byte.
+ *
+ * (JavaScript's numbers are 64 bits until a bitwise operator is used on them, then they are
+ *  converted to 32 bits).
+ *
+ * let x = 0xF7, and n = 8 bits
+ *
+ * x     = 0000 0000 0000 0000 0000 0000 1111 0111
+ * ~x    = 1111 1111 1111 1111 1111 1111 0000 1000
+ *       & 0000 0000 0000 0000 0000 0000 1111 1111  (mask with 2^n - 1)
+ *       = 0000 0000 0000 0000 0000 0000 0000 1000
+ *       +                                       1  (add 1)
+ *       = 0000 0000 0000 0000 0000 0000 0000 1001
+ *
+ * This gives 9, then return the negation.
+ *
+ * @param {Number} twosComplement the two's complement representation
+ * @param {Object} numberBytes the number of bytes representing the number (defaults to 1 if not
+ *     specified)
+ *
+ * @return {Number} the represented integer
+ */
+defineFunction(Number, function fromTwosComplement(numberBytes) {
+    var twosComplement = this + 0;
+    var numberBits = (numberBytes || 1) * 8;
+
+    if (twosComplement < 0 || twosComplement > (1 << numberBits) - 1)
+        throw 'Two\'s complement out of range given ' + numberBytes + ' byte(s) to represent.';
+
+    // If less than the maximum positive: 2^(n-1)-1, the number stays positive
+    if (twosComplement <= (1 << (numberBits - 1)) - 1)
+        return twosComplement;
+
+    // Else convert to it's negative representation
+    return -(((~twosComplement) & ((1 << numberBits) - 1)) + 1);
+});
+
+/**
+ * Adds the addend to this number treating them as if they are represented in two's complement given
+ * the specified number of bytes to represent.
+ *
+ * @param {Number} addend the number to add
+ * @param {Number} numberBytes the number of bytes used to represent the number
+ *
+ * @return {Number} the result of the addition
+ */
+defineFunction(Number, function addTwosComplement(addend, numberBytes) {
+    var number = this + 0;
+    var numberBits = (numberBytes || 1) * 8;
+
+    // Mask to remove the overflow bit if there is one
+    return ~(-1 << numberBits) & (number + addend);
+});
+
 defineFunction(Array, Array.prototype.push, 'enqueue');
 defineFunction(Array, Array.prototype.shift, 'dequeue');
+
+defineFunction(Array, function remove(index) {
+    return this.splice(index, 1)[0];
+});
 
 Utils.bidirectional = function (obj) {
     for (var key in obj) {

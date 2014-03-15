@@ -104,7 +104,7 @@ function createFile(filename, forSwap) {
  *
  * @param filename the file
  */
-function readFile(filename) {
+var readFile = OS.HardDriveDriver.readFile = function (filename) {
     trace('Reading file: ' + filename);
 
     var filenameFile = findFile(filename);
@@ -122,7 +122,7 @@ function readFile(filename) {
     }
 
     return contents;
-}
+};
 
 /**
  * Writes data to the specified file (overwrites; does not append).

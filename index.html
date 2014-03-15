@@ -33,18 +33,23 @@
 	<!-- Operating System -->
 	<!-- Host -->
 	<script type="text/javascript" src="resources/js/os/host/control.js"></script>
+	<script type="text/javascript" src="resources/js/os/host/cpu.js"></script>
 	<script type="text/javascript" src="resources/js/os/host/memory.js"></script>
 	<script type="text/javascript" src="resources/js/os/host/hardDrive.js"></script>
 	<script type="text/javascript" src="resources/js/os/host/console.js"></script>
 	<script type="text/javascript" src="resources/js/os/host/statusBar.js"></script>
 	<script type="text/javascript" src="resources/js/os/host/log.js"></script>
+	<script type="text/javascript" src="resources/js/os/host/programInput.js"></script>
 	<!-- Host displays -->
 	<script type="text/javascript" src="resources/js/os/host/display/cpu.js"></script>
 	<script type="text/javascript" src="resources/js/os/host/display/memory.js"></script>
 	<script type="text/javascript" src="resources/js/os/host/display/hardDrive.js"></script>
+	<script type="text/javascript" src="resources/js/os/host/display/processes.js"></script>
 	<!-- OS -->
 	<script type="text/javascript" src="resources/js/os/os/kernel.js"></script>
 	<script type="text/javascript" src="resources/js/os/os/interrupt.js"></script>
+	<script type="text/javascript" src="resources/js/os/os/memoryManager.js"></script>
+	<script type="text/javascript" src="resources/js/os/os/pcb.js"></script>
 	<script type="text/javascript" src="resources/js/os/os/shell.js"></script>
 	<script type="text/javascript" src="resources/js/os/os/file.js"></script>
 	<!-- OS Drivers -->
@@ -84,6 +89,12 @@
 			<div id="osButtonHardDriveRefresh" class="osButtonSmall osButtonRefresh"></div>
 			<div id="osButtonHardDriveExpand" class="osButtonSmall osButtonExpand"></div>
 		</div>
+	</div>
+	<div id="osProcessesContainer" class="panel scrollY">
+		<div id="osProcesses"></div>
+	</div>
+	<div id="osProgramInputContainer" class="panel scrollY">
+		<div id="osProgramInput" contentEditable="true" spellcheck="false"></div>
 	</div>
 </div>
 

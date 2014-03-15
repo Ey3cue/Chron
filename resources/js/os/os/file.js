@@ -164,12 +164,12 @@ OS.File.prototype.toFileString = function () {
     // File string is of the form: Status T  S  B  Data
     //             Hex Characters: 00     00 00 00 00000000...
 
-    var str = '', part;
+    var str = '';
 
-    str += this.status.id.toString(16).prepad(2, '0');
-    str += this.linkedTrack.toString(16).prepad(2, '0');
-    str += this.linkedSector.toString(16).prepad(2, '0');
-    str += this.linkedBlock.toString(16).prepad(2, '0');
+    str += this.status.id.toHex(2);
+    str += this.linkedTrack.toHex(2);
+    str += this.linkedSector.toHex(2);
+    str += this.linkedBlock.toHex(2);
 
     var data = convertData(this.data);
 
@@ -240,7 +240,7 @@ var revertData = OS.File.revertData = function (data) {
         revertedData += String.fromCharCode(parseInt(data.substr(i, 2), 16));
     }
 
-    return revertedData.replace(/\0+/g, '');
+    return revertedData;
 };
 
 /**

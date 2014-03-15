@@ -37,8 +37,28 @@ OS.CpuDisplay.stop = function () {
 };
 
 OS.CpuDisplay.update = function () {
-    // TODO
+    var registers = OS.Cpu.getRegisters();
+
+    for (var register in registers) {
+        var value = '0x' + registers[register].data.toHex(2);
+        var status = registers[register].status;
+
+        _registers[register].html(status.CpuDisplay_formatValue(value));
+
+        registers[register].resetStatus();
+    }
 };
 
+OS.RegisterStatus.NORMAL.CpuDisplay_formatValue = function (value) {
+    return value;
+};
+
+OS.RegisterStatus.READ.CpuDisplay_formatValue = function (value) {
+    return '<span class="blue">' + value + '</span>';
+};
+
+OS.RegisterStatus.WRITTEN.CpuDisplay_formatValue = function (value) {
+    return '<span class="green">' + value + '</span>';
+};
 
 })();

@@ -11,11 +11,15 @@ var _$displayContainer;
 var _$display;
 var _$separators;
 
+var isBlockAvailable;
+
 OS.MemoryDisplay.init = function () {
     _$displayContainer = $('#osMemoryDisplayContainer');
     _$display = $('#osMemoryDisplay');
 
     _fontHeight = Utils.pixelToLineHeight[parseInt(_$display.css('font-size'), 10)];
+
+    isBlockAvailable = OS.MemoryManager.isBlockAvailable;
 
     OS.MemoryDisplay.update();
 
@@ -37,15 +41,32 @@ OS.MemoryDisplay.update = function () {
 
     var html = '';
     var isNewBlockBeginning = false;
+    var isCurrentBlockAvailable = isBlockAvailable(0);
 
     // Start with the largest address + 1
     var earliestChangedAddress = memory.length;
+
+    // Grey out unallocated block
+    if (isCurrentBlockAvailable) {
+        html += '<span class="grey">';
+    }
 
     for (var i = 0; i < memory.length; i++) {
         // If a new block is beginning and it's not the first (i !== 0)
         isNewBlockBeginning = i && i % OS.MEMORY_BLOCK_SIZE === 0;
 
         if (isNewBlockBeginning) {
+            // End grey out
+            if (isCurrentBlockAvailable) {
+                html += '</span>';
+            }
+
+            // Grey out unallocated block
+            isCurrentBlockAvailable = isBlockAvailable(Math.floor(i / OS.MEMORY_BLOCK_SIZE));
+            if (isCurrentBlockAvailable) {
+                html += '<span class="grey">';
+            }
+
             // Add a separator
             html += '<div class="osMemoryDisplaySeparator"></div>';
         }
@@ -54,8 +75,8 @@ OS.MemoryDisplay.update = function () {
         if (i % OS.MEMORY_DISPLAY_ADDRESSES_PER_LINE === 0) {
             // Add new line if i is not 0 and it's not the beginning of a new block
             html += '<span class="grey">' +
-                    (i && !isNewBlockBeginning ? '\n' : '') +
-                    '0x' + i.toHex(3) + // Current address
+                        (i && !isNewBlockBeginning ? '\n' : '') +
+                        '0x' + i.toHex(3) + // Current address
                     '</span>';
         }
 
@@ -76,12 +97,14 @@ OS.MemoryDisplay.update = function () {
     if (OS.MemoryDisplay.autoscroll && earliestChangedAddress !== memory.length) {
         _$displayContainer.scrollTop(
             // Number of lines multiplied by the line height
-            earliestChangedAddress / OS.MEMORY_DISPLAY_ADDRESSES_PER_LINE * _fontHeight +
+            Math.floor(earliestChangedAddress / OS.MEMORY_DISPLAY_ADDRESSES_PER_LINE) * _fontHeight +
             // Add number of separators that come before it (number of blocks - 1 multiplied by line height)
             Math.floor(earliestChangedAddress / OS.MEMORY_BLOCK_SIZE) * _fontHeight
         );
         _$displayContainer.perfectScrollbar('update');
     }
+
+    OS.Memory.resetStatuses();
 };
 
 /*
@@ -90,15 +113,15 @@ OS.MemoryDisplay.update = function () {
  */
 
 OS.MemoryStatus.NORMAL.MemoryDisplay_formatWord = function (value) {
-    return value.toString(16).prepad(2, '0');
+    return value.toHex(2);
 };
 
 OS.MemoryStatus.READ.MemoryDisplay_formatWord = function (value) {
-    return '<span class="green">' + value.toString(16).prepad(2, '0') + '</span>';
+    return '<span class="green">' + value.toHex(2) + '</span>';
 };
 
 OS.MemoryStatus.WRITTEN.MemoryDisplay_formatWord = function (value) {
-    return '<span class="blue">' + value.toString(16).prepad(2, '0') + '</span>';
+    return '<span class="blue">' + value.toHex(2) + '</span>';
 };
 
 })();
