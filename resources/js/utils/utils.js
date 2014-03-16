@@ -80,11 +80,6 @@ defineFunction(String, function toCodeString() {
     return codeStr;
 });
 
-defineFunction(Number, function toHex(padding) {
-    return padding ? this.toString(16).toUpperCase().prepad(padding, '0') :
-                     this.toString(16).toUpperCase();
-});
-
 /**
  * Gives the ROT13 obfuscation of this string.
  *
@@ -96,6 +91,11 @@ defineFunction(String, function rot13() {
     return this.replace(/[a-zA-Z]/g, function (c) {
         return String.fromCharCode((c <= "Z" ? 90 : 122) >= (c = c.charCodeAt(0) + 13) ? c : c - 26);
     });
+});
+
+defineFunction(Number, function toHex(padding) {
+    return padding ? this.toString(16).toUpperCase().prepad(padding, '0') :
+                     this.toString(16).toUpperCase();
 });
 
 /**

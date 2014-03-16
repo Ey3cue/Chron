@@ -7,8 +7,10 @@ var _loaded = false;
 var _hardDrive;
 
 OS.HardDriveDriver.start = function () {
-
     var _hardDrive = new OS.HardDrive();
+
+    clearSwapData();
+    OS.HardDriveDisplay.update();
 
     _loaded = true;
     trace('Driver loaded.');
@@ -83,6 +85,10 @@ OS.HardDriveDriver.isr = function (params) {
  */
 function createFile(filename, forSwap) {
     trace('Creating file: ' + filename);
+
+    if (!forSwap && OS.File.isSystemName(filename)) {
+        throw 'Cannot create system files.';
+    }
 
     try {
         var filenameFile = findFile(filename);
@@ -249,6 +255,25 @@ function format() {
     }
 
     OS.hardDrive.write(0, 0, 0, OS.mbr.toFileString());
+}
+
+/**
+ * Removes possibly left over swap data on the hard drive from processes terminated abnormally.
+ */
+function clearSwapData() {
+    trace('Removing old swap data.');
+
+    var iterator = new HardDriveIterator(OS.hardDrive), element, file;
+    iterator.setTermination(0, 7, 7);
+
+    while ((element = iterator.next())) {
+        file = OS.File.fileFromStr(element);
+
+        if (file.isSystemFile()) {
+            file.setTSB(iterator.track, iterator.sector, iterator.block);
+            deleteFileChain(file, true);
+        }
+    }
 }
 
 /**

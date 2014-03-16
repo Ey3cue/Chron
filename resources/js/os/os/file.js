@@ -136,6 +136,10 @@ OS.File.prototype.getData = function () {
     return null;
 };
 
+OS.File.prototype.isSystemFile = function () {
+    return OS.File.isSystemName(this.getData());
+};
+
 /**
  * Returns true if this file is available.
  *
@@ -274,6 +278,10 @@ OS.File.fileFromStr = function (fileStr) {
     file.setWithFileString(fileStr);
 
     return file;
+};
+
+OS.File.isSystemName = function (filename) {
+    return filename && filename.contains('.sys');
 };
 
 })();
