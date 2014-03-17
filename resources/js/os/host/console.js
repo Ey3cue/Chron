@@ -150,8 +150,13 @@ var getWriteFunction = OS.Console.getWriteFunction = function () {
     var $output = $('<div class="output"></div>');
     _$consoleOutput.append($output);
 
-    return function (output) {
-        $output.html($output.html() + formatOutput(output));
+    return function (output, classes) {
+        if (classes) {
+            $output.html($output.html() + formatOutput('`' + classes + '`' + output + '``'));
+        } else {
+            $output.html($output.html() + formatOutput(output));
+        }
+
         // TODO If the user scrolled up to view previous output, this should NOT scroll to the
         //   bottom.
         scrollToBottom();

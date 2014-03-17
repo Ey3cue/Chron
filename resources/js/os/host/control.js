@@ -41,7 +41,8 @@ OS.ProcessStatus = new Enum(
     'RESIDENT',
     'READY',
     'RUNNING',
-    'TERMINATED'
+    'TERMINATED',
+    'ABORTED'
 );
 
 OS.MemoryStatus =
@@ -189,6 +190,11 @@ OS.Control.updateStatus = function (status) {
 };
 
 OS.Control.clockPulse = function (step) {
+    // Do not pulse if on the compiler
+    if (MainTabs.activeId === 'compiler') {
+        return;
+    }
+
     // Pass in whether to execute a pulse to the CPU to initiate a single step. If single step is
     //   off, do this regardless. If it's on, only pulse if the step argument is also true (the
     //   step button was pressed then)

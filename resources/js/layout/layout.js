@@ -74,7 +74,8 @@ MainTabs = {
     $tabContainer: null,
     $selectedTab: null,
     tabs: {},
-    tabCount: 0
+    tabCount: 0,
+    activeId: null
 };
 
 MainTabs.init = function () {
@@ -110,6 +111,7 @@ MainTabs.triggerSelect = function (id) {
 
 MainTabs.select = function (event) {
     var id = event.data;
+    MainTabs.activeId = id;
 
     // Check if already selected
     if (MainTabs.$selectedTab === MainTabs.tabs[id] || !MainTabs.tabs[id]) {

@@ -36,25 +36,24 @@ OS.HardDriveDriver.isr = function (params) {
         // Shell commands
         case 'create':
             createFile(params.filename);
-            write('File created.');
+            write('File created.', 'green');
             break;
         case 'read':
             write(readFile(params.filename));
             break;
         case 'write':
             writeFile(params.filename, params.data);
-            write('File written.');
+            write('File written.', 'green');
             break;
         case 'delete':
             deleteFile(params.filename);
-            write('File deleted.');
+            write('File deleted.', 'green');
             break;
         case 'list':
             listFiles(write);
             break;
         case 'format':
-            format();
-            write('Format successful.');
+            format(write);
             break;
 
         // Swap commands
@@ -247,7 +246,12 @@ function listFiles(write) {
 /**
  * Formats the hard drive (i.e. zero-fills it).
  */
-function format() {
+function format(write) {
+    if (OS.Kernel.isExecuting()) {
+        write('Cannot format drive while processes are active.', 'yellow');
+        return;
+    }
+
     trace('Formatting hard drive...');
 
     var t, s, b;
@@ -261,6 +265,8 @@ function format() {
     }
 
     OS.hardDrive.write(0, 0, 0, OS.mbr.toFileString());
+
+    write('Format successful.', 'green');
 }
 
 /**

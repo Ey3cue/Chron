@@ -79,6 +79,10 @@ OS.Kernel.clockPulse = function (step) {
     }
 };
 
+OS.Kernel.isExecuting = function () {
+    return _isCpuExecuting;
+};
+
 // ---------- Interrupt Handling ----------
 
 var interrupt = OS.Kernel.interrupt = function (irq, params) {
@@ -139,7 +143,7 @@ var loadProgram = OS.Kernel.loadProgram = function (code, priority, write) {
         OS.MemoryManager.loadProcess(pcb, code);
 
         // Send the PID to the console.
-        write('PID: ' + pcb.pid);
+        write('PID: ' + pcb.pid, 'blue');
 
         // Place on resident list
         _residentList[pcb.pid] = pcb;
@@ -161,11 +165,11 @@ var runProcess = OS.Kernel.runProcess = function (pid, write) {
 
     // Check if the PCB defines a valid process
     if (process) {
-        trace('Running process: ' + pid);
+        trace('Running process: PID ' + pid);
         // Place on the ready queue
         _readyQueue.enqueue(process);
         process.status = OS.ProcessStatus.READY;
-        write('Process ' + pid + ': ');
+        write('PID ' + pid + ': ', 'blue');
         process.write = write;
         // Remove from resident list
         delete _residentList[pid];
@@ -183,11 +187,11 @@ var runAllProcesses = OS.Kernel.runAllProcesses = function (write) {
     for (var pid in _residentList) {
         var process = _residentList[pid];
 
-        trace('Running process: ' + pid);
+        trace('Running process: PID ' + pid);
         // Place on the ready queue
         _readyQueue.enqueue(process);
         process.status = OS.ProcessStatus.READY;
-        write('Process ' + pid + ': ');
+        write('PID ' + pid + ': ', 'blue');
         process.write = write;
         write = OS.Console.getWriteFunction();
         // Remove from resident list
@@ -208,7 +212,7 @@ var killProcess = OS.Kernel.killProcess = function (pid, write) {
 
     if (_runningProcess.pid === pid) {
         trace('Terminating process: ' + pid);
-        interrupt(OS.Irq.PROCESS_TERMINATED, 'User terminated process.');
+        interrupt(OS.Irq.PROCESS_TERMINATED, 'User terminated.');
         found = true;
     } else {
         for (var i = _readyQueue.length - 1; i >= 0; i--) {
@@ -216,6 +220,7 @@ var killProcess = OS.Kernel.killProcess = function (pid, write) {
 
             if (process.pid === pid) {
                 trace('Terminating process: ' + pid);
+                process.write(' User terminated.', 'yellow');
                 process.status = OS.ProcessStatus.TERMINATED;
                 _readyQueue.remove(i);
                 found = true;
@@ -224,10 +229,8 @@ var killProcess = OS.Kernel.killProcess = function (pid, write) {
         }
     }
 
-    if (found) {
-        write('Process terminated.');
-    } else {
-        write('Process not found.');
+    if (!found) {
+        write('Process not found.', 'yellow');
     }
 };
 
@@ -290,18 +293,19 @@ function processFault(message) {
     var fullMessage = 'Process aborted (PID ' + _runningProcess.pid + ')' +
                       (message ? ': ' + message : '');
     trace(fullMessage);
-    _runningProcess.write('\n' + fullMessage);
+    _runningProcess.write(' Aborted' + (message ? ': ' + message : ''), 'orange');
 
     // Stop CPU execution
     _isCpuExecuting = false;
     OS.Cpu.clearRegisters();
 
-    // Move process back to resident list (since it's still in memory)
-    _residentList[_runningProcess.pid] = _runningProcess;
+    // Remove process
+    OS.MemoryManager.deallocate(_runningProcess);
+    _runningProcess.status = OS.ProcessStatus.ABORTED;
     _runningProcess = null;
 }
 
-function processTerminated() {
+function processTerminated(message) {
     trace('Process completed (PID ' + _runningProcess.pid + ').');
 
     // Stop CPU execution
@@ -310,6 +314,7 @@ function processTerminated() {
 
     // Remove process
     OS.MemoryManager.deallocate(_runningProcess);
+    _runningProcess.write(' ' + (message || 'Done.'), (message ? 'yellow' : 'green'));
     _runningProcess.status = OS.ProcessStatus.TERMINATED;
     _runningProcess = null;
 }
