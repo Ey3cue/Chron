@@ -9,6 +9,12 @@ var _hardDrive;
 OS.HardDriveDriver.start = function () {
     var _hardDrive = new OS.HardDrive();
 
+    try {
+        OS.HardDriveDisplay.update();
+    } catch (e) {
+        format();
+    }
+
     clearSwapData();
     OS.HardDriveDisplay.update();
 

@@ -34,8 +34,6 @@ OS.HardDriveDisplay.init = function () {
 
     $('#osButtonHardDriveRefresh').click(OS.HardDriveDisplay.update);
     _$expandButton.click(OS.HardDriveDisplay.toggleExpand);
-
-    OS.HardDriveDisplay.update();
 };
 
 OS.HardDriveDisplay.start = function () {
