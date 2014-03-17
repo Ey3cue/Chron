@@ -60,6 +60,7 @@ OS.FileStatus = new Enum(0,
 // OS variables...
 OS.clock = 0;
 OS.cpuClockInterval = null;
+OS.singleStep = false;
 
 OS.hardDrive = null;
 OS.mbr = null;
@@ -187,14 +188,20 @@ OS.Control.updateStatus = function (status) {
     OS.StatusBar.update();
 };
 
-OS.Control.clockPulse = function () {
-    OS.Kernel.clockPulse();
+OS.Control.clockPulse = function (step) {
+    // Pass in whether to execute a pulse to the CPU to initiate a single step. If single step is
+    //   off, do this regardless. If it's on, only pulse if the step argument is also true (the
+    //   step button was pressed then)
+    step = !OS.singleStep || step;
+    OS.Kernel.clockPulse(step);
 
-    OS.clock++;
+    if (step) {
+        OS.clock++;
 
-    OS.CpuDisplay.update();
-    OS.MemoryDisplay.update();
-    OS.ProcessesDisplay.update();
+        OS.CpuDisplay.update();
+        OS.MemoryDisplay.update();
+        OS.ProcessesDisplay.update();
+    }
 };
 
 OS.Control.trace = function (message) {

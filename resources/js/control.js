@@ -31,9 +31,10 @@ Control.init = function () {
 	// OS
 	OS.Control.init();
 
-	if (URL_PARAMETERS.start) {
-        MainTabs.select({ data: URL_PARAMETERS.start });
-    }
+    // TODO Figure out why this timeout is needed.
+    setTimeout(function () {
+        MainTabs.triggerSelect(URL_PARAMETERS.start);
+    }, 1000);
 };
 
 Control.resize = function () {

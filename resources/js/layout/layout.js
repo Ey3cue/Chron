@@ -20,6 +20,7 @@ Layout.init = function () {
 
     Layout.initScrollers();
     Layout.initTooltips();
+    Layout.initCheckboxes();
 
     $('body').css('opacity', 1);
 };
@@ -42,6 +43,29 @@ Layout.initTooltips = function () {
     $('[tooltip]').each(function (index, element) {
         var $element = $(element);
         $element.append('<div class="tooltip">' + $element.attr('tooltip') + '</div>');
+    });
+};
+
+Layout.initCheckboxes = function () {
+    $('div.checkboxText').each(function (index, element) {
+        var $element = $(element);
+        var id = $element.attr('id');
+        var checked = $element.attr('checked') || '';
+        var value = $element.attr('value');
+        $element.removeAttr('id checked value')
+                .append('<input type="checkbox" id="' + id + '" name="' + id + '" ' + checked + '>' +
+                        '<label for="' + id + '">' + value + '</label>');
+    });
+
+    $('div.checkboxImage').each(function (index, element) {
+        var $element = $(element);
+        var id = $element.attr('id');
+        var checked = $element.attr('checked') || '';
+        var value = $element.attr('value');
+        var buttonClass = $element.attr('buttonClass');
+        $element.removeAttr('id checked value buttonClass')
+                .append('<input type="checkbox" id="' + id + '" name="' + id + '" ' + checked + '>' +
+                        '<label for="' + id + '" class="' + buttonClass + '"></label>');
     });
 };
 
@@ -76,6 +100,12 @@ MainTabs.add = function (title, description, id) {
     MainTabs.$tabContainer.append($tab);
     MainTabs.tabs[id] = $tab;
     MainTabs.tabCount++;
+};
+
+MainTabs.triggerSelect = function (id) {
+    if (MainTabs.tabs[id]) {
+        MainTabs.tabs[id].trigger('click');
+    }
 };
 
 MainTabs.select = function (event) {

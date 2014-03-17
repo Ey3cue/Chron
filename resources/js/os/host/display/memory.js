@@ -3,13 +3,13 @@ OS.MemoryDisplay = {};
 
 (function () {
 
-OS.MemoryDisplay.autoscroll = true;
-
 var _fontHeight;
 
 var _$displayContainer;
 var _$display;
 var _$separators;
+
+var _autoscroll;
 
 var isBlockAvailable;
 
@@ -18,6 +18,8 @@ OS.MemoryDisplay.init = function () {
     _$display = $('#osMemoryDisplay');
 
     _fontHeight = Utils.pixelToLineHeight[parseInt(_$display.css('font-size'), 10)];
+
+    _autoscroll = true;
 
     isBlockAvailable = OS.MemoryManager.isBlockAvailable;
 
@@ -33,6 +35,10 @@ OS.MemoryDisplay.start = function () {
 
 OS.MemoryDisplay.stop = function () {
     _$display.css('opacity', 0);
+};
+
+OS.MemoryDisplay.setAutoscroll = function (autoscroll) {
+    _autoscroll = autoscroll;
 };
 
 OS.MemoryDisplay.update = function () {
@@ -94,7 +100,7 @@ OS.MemoryDisplay.update = function () {
     _$displayContainer.perfectScrollbar('update');
 
     // If autoscroll is enabled and there is a changed address...
-    if (OS.MemoryDisplay.autoscroll && earliestChangedAddress !== memory.length) {
+    if (_autoscroll && earliestChangedAddress !== memory.length) {
         _$displayContainer.scrollTop(
             // Number of lines multiplied by the line height
             Math.floor(earliestChangedAddress / OS.MEMORY_DISPLAY_ADDRESSES_PER_LINE) * _fontHeight +

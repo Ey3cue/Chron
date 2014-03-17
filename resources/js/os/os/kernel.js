@@ -69,10 +69,10 @@ OS.Kernel.stop = function () {
     OS.MemoryManager.stop();
 };
 
-OS.Kernel.clockPulse = function () {
+OS.Kernel.clockPulse = function (step) {
     if (_interruptQueue.length > 0) {
         handleInterrupt(_interruptQueue.dequeue());
-    } else if (_isCpuExecuting || _readyQueue.length) {
+    } else if (step && (_isCpuExecuting || _readyQueue.length)) {
         scheduleCycle();
     } else {
         trace('Idle');
@@ -378,7 +378,7 @@ var trapError = OS.Kernel.trapError = function (message) {
 function trace(message) {
     // Don't log every idle clock pulse.
     if (message === 'Idle') {
-        if (OS.clock % IDLE_LOG_FACTOR === 0) {
+        if (OS.clock % IDLE_LOG_FACTOR === 0 && !OS.singleStep) {
             OS.log(message, 'Kernel');
         }
     } else {

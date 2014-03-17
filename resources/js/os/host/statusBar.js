@@ -27,6 +27,20 @@ OS.StatusBar.init = function () {
         _$buttons = _$buttons.add(_buttons[key]);
     }
 
+    $('#osAutoscroll').change(function () {
+        OS.MemoryDisplay.setAutoscroll($(this).is(':checked'));
+    });
+
+    $('#osSingleStep').change(function () {
+        OS.singleStep = $(this).is(':checked');
+    });
+
+    $('#osButtonStep').click(function () {
+        if (OS.singleStep) {
+            OS.Control.clockPulse(true);
+        }
+    });
+
     // Update the clock every second. Not a magic number; there's 1000 ms in 1 s
     setInterval(updateTime, 1000);
 
