@@ -3,7 +3,6 @@
     position: relative;
     font: 13px Consolas, monospace;
 }
-
 #os > div {
     position: absolute;
 }
@@ -20,21 +19,26 @@
     opacity: 0;
     transition: opacity 0.4s;
 }
-
 #osConsole .input {
     padding: 7.5px 0;
     color: #8E8E8E;
 }
-
 #osConsole .output {
     padding: 2.5px 10px;
     white-space: pre-wrap;
+}
+#osConsole .output.active:after {
+    content: '';
+    display: inline-block;
+    margin: 2px 0 2px 5px;
+    width: 19px;
+    height: 5px;
+    background-image: url(../images/loader-dots.gif);
 }
 
 #osConsoleInput {
     padding: 7.5px 0;
 }
-
 #osConsoleInput span {
     outline: none;
 }
@@ -43,36 +47,6 @@
     opacity: 0;
 }
 
-.osButton {
-    width: 24px;
-    height: 24px;
-}
-
-.osButtonSmall {
-    margin: 2px;
-    width: 18px;
-    height: 18px;
-}
-
-.osButton,
-.osButtonSmall {
-    background-size: 100% 100%;
-    cursor: pointer;
-    opacity: 0.5;
-}
-
-.osButton:hover,
-.osButtonSmall:hover {
-    opacity: 1;
-}
-
-.osButtonRefresh { background-image: url(../images/button-refresh.png); }
-.osButtonExpand { background-image: url(../images/button-plus.png); }
-.osButtonRestore { background-image: url(../images/button-minus.png); }
-.osButtonAutoscroll { background-image: url(../images/button-autoscroll.png); }
-.osButtonStep { background-image: url(../images/button-step.png); }
-.osButtonPlay { background-image: url(../images/button-play.png); }
-
 /* Status Bar */
 
 #osStatusBar {
@@ -80,7 +54,6 @@
     width: 500px;
     text-align: right;
 }
-
 #osStatusBar > div {
     float: left;
 }
@@ -97,7 +70,6 @@
     border-radius: 4px;
     transition: all 0.4s;
 }
-
 #osStatus.operating { background-color: #7AFF4D; }
 #osStatus.shutdown { background-color: #FF4D4D; }
 
@@ -127,18 +99,15 @@
     opacity: 0;
     transition: opacity 0.4s;
 }
-
 #osCpuDisplay > div {
     font-size: 11pt;
 }
-
 #osCpuDisplay .regTitle {
     float: left;
     width: 50%;
     opacity: 0.6;
     text-align: center;
 }
-
 #osCpuDisplay .regValue {
     float: right;
     width: 50%;
@@ -152,12 +121,10 @@
     width: 67px;
     height: 93px;
 }
-
 #osOptions > .checkbox {
     margin-bottom: 5px;
     width: 100%;
 }
-
 #osOptions > div {
     margin: auto;
 }
@@ -189,7 +156,6 @@
     background-color: #141414;
     transition: all 0.4s;
 }
-
 #osHardDriveDisplayContainer.expanded {
     left: 54px;
     top: 0;
@@ -210,14 +176,12 @@
     opacity: 0;
     transition: opacity 0.4s;
 }
-
 #osHardDriveDisplay .block {
     position: relative;
     padding: 0 2px;
     width: 955px;
     border-radius: 5px;
 }
-
 #osHardDriveDisplay .block:after {
     content: '';
     position: absolute;
@@ -228,11 +192,9 @@
     border: 1px solid transparent;
     transition: border-color 0.2s;
 }
-
 #osHardDriveDisplay .block:hover:after {
     border-color: #4D7AFF;
 }
-
 #osHardDriveDisplay .linked:after {
     border-color: #4DFFFF;
 }
@@ -247,24 +209,20 @@
     box-shadow: 0 0 10px 10px #141414;
     transition: all 0.2s;
 }
-
 .expanded #osHardDriveDataViewer {
     left: auto;
     right: 0;
     top: 100%;
     bottom: auto;
 }
-
 #osHardDriveDataViewer.visible {
     opacity: 1;
 }
-
 #osHardDriveDataViewer th {
     padding: 2px;
     opacity: 0.6;
     font-weight: normal;
 }
-
 #osHardDriveDataViewer td {
     padding: 2px 5px;
     text-align: center;
@@ -279,7 +237,6 @@
     background-color: #141414;
     transition: opacity 0.4s;
 }
-
 #osHardDriveDisplayContainer:hover #osHardDriveOptions {
     opacity: 1;
 }
@@ -293,6 +250,7 @@
 }
 
 /* Processes */
+
 #osProcessesContainer {
     left: 500px;
     top: 399px;
@@ -304,23 +262,21 @@
 #osProcesses {
     width: 100%;
 }
-
 #osProcesses th {
     padding: 2px;
     opacity: 0.6;
     font-weight: normal;
 }
-
 #osProcesses tr td:first-of-type {
     width: 60px;
 }
-
 #osProcesses td {
     padding: 2px;
     text-align: center;
 }
 
 /* Program Input */
+
 #osProgramInputContainer {
     left: 788px;
     top: 399px;

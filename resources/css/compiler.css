@@ -1,0 +1,252 @@
+
+#compiler {
+    position: relative;
+    font: 13px Consolas, monospace;
+}
+
+#compiler > div {
+    position: absolute;
+}
+
+/* Source Code */
+
+#compilerSourceContainer {
+    left: 80px;
+    top: 0;
+    width: 300px;
+    height: 500px;
+    overflow: visible;
+    /*border: 1px solid white;*/
+}
+
+#compilerSourceOptions {
+    position: absolute;
+    margin-right: 5px;
+    top: 0;
+    right: 100%;
+    width: 100px;
+    word-wrap: break-word;
+}
+
+.compilerSourceButton {
+    margin-bottom: 5px;
+    text-align: right;
+    cursor: pointer;
+    opacity: 0.6;
+    transition: opacity 0.2s;
+}
+.compilerSourceButton:hover {
+    opacity: 1;
+}
+#compilerCompileButton,
+#compilerRunButton {
+    font-weight: bold;
+    font-size: 20px;
+    margin-bottom: 10px;
+}
+
+.CodeMirror {
+    font-family: Consolas, monospace;
+}
+
+/* Scrollbars */
+.CodeMirror-hscrollbar,
+.CodeMirror-vscrollbar,
+.CodeMirror-scrollbar-filler {
+    opacity: 0;
+    transition: 0.2s;
+}
+.CodeMirror:hover .CodeMirror-hscrollbar,
+.CodeMirror:hover .CodeMirror-vscrollbar,
+.CodeMirror:hover .CodeMirror-scrollbar-filler {
+    opacity: 0.6;
+}
+.CodeMirror *::-webkit-scrollbar-track
+{
+    border-radius: 4px;
+    background-color: transparent;
+}
+.CodeMirror *::-webkit-scrollbar
+{
+    width: 8px;
+    height: 8px;
+    background-color: transparent;
+}
+.CodeMirror *::-webkit-scrollbar-thumb
+{
+    border-radius: 10px;
+    background-color: #aaa;
+}
+
+/* Slight theme modifications */
+.cm-s-twilight .CodeMirror-gutters {
+    background: #141414;
+    border-right: 1px solid #8E8E8E;
+}
+.cm-s-twilight .CodeMirror-linenumber {
+    color: #8E8E8E;
+}
+
+/* Token Stream */
+
+#compilerTokenStream {
+    left: 400px;
+    top: 0;
+    width: 600px;
+    overflow: hidden;
+    font-size: 15px;
+    font-weight: bold;
+}
+
+#compilerTokenStream:before,
+#compilerTokenStream:after {
+    content: '';
+    position: absolute;
+    top: 0;
+    height: 100%;
+    width: 35px;
+    z-index: 1;
+}
+#compilerTokenStream:before {
+    left: 0;
+    background: linear-gradient(90deg, rgba(20, 20, 20, 1), rgba(20, 20, 20, 0));
+}
+#compilerTokenStream:after {
+    right: 0;
+    background: linear-gradient(90deg, rgba(20, 20, 20, 0), rgba(20, 20, 20, 1));
+}
+
+#compilerTokenStream .tokenNumber {
+    font-size: 13px;
+    font-weight: normal;
+    color: #8E8E8E;
+}
+
+/* Syntax Trees */
+
+svg {
+    display: block;
+    margin: auto;
+}
+
+#compilerSyntaxTreeContainer {
+    left: 400px;
+    top: 35px;
+    width: 290px;
+    height: 300px;
+    background-color: #141414;
+    transition: all 0.4s;
+}
+#compilerSyntaxTreeContainer.expanded {
+    top: 0;
+    width: 600px;
+    height: 500px;
+    z-index: 2000;
+}
+
+#compilerSyntaxTreeScroller {
+    overflow: hidden;
+    position: relative;
+    width: 100%;
+    height: 100%;
+}
+
+#compilerCst,
+#compilerAst {
+    position: absolute;
+    min-width: 290px;
+    min-height: 300px;
+    opacity: 0;
+    transition: opacity 0.4s;
+}
+#compilerCst.compilerActiveST,
+#compilerAst.compilerActiveST {
+    opacity: 1;
+    z-index: 1;
+}
+
+#compilerCst.compilerSTGen,
+#compilerAst.compilerSTGen {
+    cursor: pointer;
+    text-align: center;
+}
+#compilerCst.compilerSTGen:after {
+    content: 'Generate CST';
+}
+#compilerAst.compilerSTGen:after {
+    content: 'Generate AST';
+}
+#compilerCst.compilerSTGen:after,
+#compilerAst.compilerSTGen:after {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 290px;
+    height: 300px;
+    background-color: #141414;
+    font-size: 20px;
+    line-height: 300px;
+    opacity: 0.6;
+    transition: opacity 0.2s;
+}
+#compilerCst.compilerSTGen:hover:after,
+#compilerAst.compilerSTGen:hover:after {
+    opacity: 1;
+}
+
+#compilerSyntaxTreeOptions {
+    position: absolute;
+    top: 0;
+    right: -24px;
+    width: 22px;
+    opacity: 0;
+    background-color: #141414;
+    transition: opacity 0.4s;
+}
+#compilerSyntaxTreeContainer:hover #compilerSyntaxTreeOptions {
+    opacity: 1;
+}
+
+/* Output */
+
+#compilerOutputContainer {
+    left: 400px;
+    top: 350px;
+    width: 600px;
+    height: 150px;
+}
+
+#compilerOutput {
+    white-space: pre;
+}
+
+.compilerCode {
+    position: relative;
+    cursor: pointer;
+}
+/*
+.compilerCode:before {
+    content: 'RUN';
+    position: relative;
+    padding: 0 5px;
+    margin-right: 5px;
+    top: 0;
+    left: 0;
+    height: 100%;
+    line-height: 15px;
+    background-color: #E0E0E0;
+    border-radius: 7.5px;
+    font-weight: bold;
+    color: #141414;
+    opacity: 0.6;
+    transition: opacity 0.2s;
+}
+.compilerCode:hover:before {
+    opacity: 1;
+}
+
+.compilerCode .compilerCodeShow {
+    white-space: pre-wrap;
+    word-wrap: break-word;
+}
+*/

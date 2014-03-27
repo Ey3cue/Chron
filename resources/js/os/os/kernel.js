@@ -128,7 +128,7 @@ function systemCallIsr(code) {
  * @param {Number} priority (optional) the priority
  * @param {Function} write the function to write output to the console
  */
-var loadProgram = OS.Kernel.loadProgram = function (code, priority, write) {
+var loadProgram = OS.Kernel.loadProgram = function (code, priority, write, quietly) {
     write = write || OS.Console.getWriteFunction();
     trace('Loading program.');
 
@@ -143,11 +143,15 @@ var loadProgram = OS.Kernel.loadProgram = function (code, priority, write) {
         OS.MemoryManager.loadProcess(pcb, code);
 
         // Send the PID to the console.
-        write('PID: ' + pcb.pid, 'blue');
+        if (!quietly) {
+            write('PID: ' + pcb.pid, 'blue');
+        }
 
         // Place on resident list
         _residentList[pcb.pid] = pcb;
         pcb.status = OS.ProcessStatus.RESIDENT;
+
+        return pcb.pid;
     } catch (e) {
         trace('Load failed: ' + e);
         write('Load failed: ' + e);
@@ -161,6 +165,7 @@ var loadProgram = OS.Kernel.loadProgram = function (code, priority, write) {
  * @param {Function} write the function to write output to the console
  */
 var runProcess = OS.Kernel.runProcess = function (pid, write) {
+    write = write || OS.Console.getWriteFunction();
     var process = _residentList[pid];
 
     // Check if the PCB defines a valid process
@@ -169,7 +174,7 @@ var runProcess = OS.Kernel.runProcess = function (pid, write) {
         // Place on the ready queue
         _readyQueue.enqueue(process);
         process.status = OS.ProcessStatus.READY;
-        write('PID ' + pid + ': ', 'blue');
+        write('PID ' + pid + ': ', 'blue', true);
         process.write = write;
         // Remove from resident list
         delete _residentList[pid];
@@ -191,7 +196,7 @@ var runAllProcesses = OS.Kernel.runAllProcesses = function (write) {
         // Place on the ready queue
         _readyQueue.enqueue(process);
         process.status = OS.ProcessStatus.READY;
-        write('PID ' + pid + ': ', 'blue');
+        write('PID ' + pid + ': ', 'blue', true);
         process.write = write;
         write = OS.Console.getWriteFunction();
         // Remove from resident list
@@ -220,7 +225,7 @@ var killProcess = OS.Kernel.killProcess = function (pid, write) {
 
             if (process.pid === pid) {
                 trace('Terminating process: ' + pid);
-                process.write(' User terminated.', 'yellow');
+                process.write(' User terminated.', 'yellow', false);
                 process.status = OS.ProcessStatus.TERMINATED;
                 _readyQueue.remove(i);
                 found = true;
@@ -293,7 +298,7 @@ function processFault(message) {
     var fullMessage = 'Process aborted (PID ' + _runningProcess.pid + ')' +
                       (message ? ': ' + message : '');
     trace(fullMessage);
-    _runningProcess.write(' Aborted' + (message ? ': ' + message : ''), 'orange');
+    _runningProcess.write(' Aborted' + (message ? ': ' + message : ''), 'orange', false);
 
     // Stop CPU execution
     _isCpuExecuting = false;
@@ -314,7 +319,7 @@ function processTerminated(message) {
 
     // Remove process
     OS.MemoryManager.deallocate(_runningProcess);
-    _runningProcess.write(' ' + (message || 'Done.'), (message ? 'yellow' : 'green'));
+    _runningProcess.write(' ' + (message || 'Done.'), (message ? 'yellow' : 'green'), false);
     _runningProcess.status = OS.ProcessStatus.TERMINATED;
     _runningProcess = null;
 }

@@ -234,6 +234,18 @@ Utils.number = function (obj, start) {
 };
 
 /**
+ * Returns true if the specified object is a instance of the specified class.
+ *
+ * @param {Object} obj the object to test
+ * @param {Object} theClass the class to test the object against
+ *
+ * @return {Boolean} true if the object is a instance of the class, false otherwise
+ */
+Utils.is = function(obj, theClass) {
+    return obj.constructor === theClass;
+};
+
+/**
  * Returns an object of the URL parameters.
  *
  * Adapted from http://stackoverflow.com/questions/979975/how-to-get-the-value-from-url-parameter

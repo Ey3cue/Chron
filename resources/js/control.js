@@ -10,6 +10,8 @@ var CPU_ID = 'cpu';
 
 var URL_PARAMETERS = null;
 
+var MIN_WINDOW_SIZE = 675;
+
 var __resizeFunctions = [];
 
 var Control = {};
@@ -24,23 +26,27 @@ var CPU = {};
 (function () {
 
 Control.init = function () {
-	// General
-	URL_PARAMETERS = Utils.getUrlParameters();
-	Layout.init();
+    // General
+    URL_PARAMETERS = Utils.getUrlParameters();
+    Layout.init();
 
-	// OS
-	OS.Control.init();
+    // OS
+    OS.Control.init();
 
-    // TODO Figure out why this timeout is needed.
-    setTimeout(function () {
-        MainTabs.triggerSelect(URL_PARAMETERS.start);
-    }, 1000);
+    // Compiler
+    Compiler.Control.init();
+
+    // TODO Figure out why this timeout is needed. For developing, disabling it, but it is a current
+    //   workaround for the OS not being able to shut down when activated too quickly.
+    //setTimeout(function () {
+    MainTabs.triggerSelect(URL_PARAMETERS.start);
+    //}, 1000);
 };
 
 Control.resize = function () {
-	for (var i = __resizeFunctions.length - 1; i >= 0; i--) {
-		__resizeFunctions[i]();
-	}
+    for (var i in __resizeFunctions) {
+        __resizeFunctions[i]();
+    }
 };
 
 $(window).load(Control.init);

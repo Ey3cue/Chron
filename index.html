@@ -7,60 +7,109 @@
 	<title>Chron</title>
 
     <!-- Favicon -->
-    <!-- <link rel="icon" href="images/favicon.ico" type="image/x-icon">
-	<link rel="shortcut icon" href="images/favicon.ico" type="image/x-icon">-->
+    <link rel="icon" href="resources/images/favicon.ico" type="image/x-icon">
+	<link rel="shortcut icon" href="resources/images/favicon.ico" type="image/x-icon">
 
+	<!-- Libraries -->
 	<link rel="stylesheet" href="vendor/normalize.css" type="text/css">
+	<link rel="stylesheet" href="vendor/jointjs/joint.nojquery.min.css" type="text/css">
 	<link rel="stylesheet" href="vendor/jquery/perfect-scrollbar/perfect-scrollbar-0.4.6.min.css" type="text/css">
+	<link rel="stylesheet" href="vendor/codemirror/codemirror.css" type="text/css">
+	<link rel="stylesheet" href="vendor/codemirror/twilight.css" type="text/css">
 
+	<!-- User style sheets -->
 	<link rel="stylesheet" href="resources/css/main.css" type="text/css">
 	<link rel="stylesheet" href="resources/css/layout.css" type="text/css">
 	<link rel="stylesheet" href="resources/css/mainTabs.css" type="text/css">
+	<link rel="stylesheet" href="resources/css/compiler.css" type="text/css">
 	<link rel="stylesheet" href="resources/css/os.css" type="text/css">
 
 	<!-- Libraries -->
-	<script type="text/javascript" src="vendor/jquery/jquery-2.0.3.min.js"></script>
-	<script type="text/javascript" src="vendor/jquery/jquery-ui-1.10.3.min.js"></script>
-	<script type="text/javascript" src="vendor/jquery/perfect-scrollbar/perfect-scrollbar-0.4.6.with-mousewheel.min.js"></script>
+	<script src="vendor/jquery/jquery-2.0.3.min.js"></script>
+	<script src="vendor/jquery/jquery-ui-1.10.3.min.js"></script>
+	<script src="vendor/jquery/marquee/jquery-marquee-0.1.8.min.js"></script>
+	<script src="vendor/jquery/perfect-scrollbar/perfect-scrollbar-0.4.6.with-mousewheel.min.js"></script>
+	<script src="vendor/codemirror/codemirror.js"></script>
+	<script src="vendor/jointjs/joint.nojquery.min.js"></script>
+	<script src="vendor/jointjs/joint.layout.DirectedGraph.min.js"></script>
 
 	<!-- General -->
-	<script type="text/javascript" src="resources/js/control.js"></script>
-	<script type="text/javascript" src="resources/js/layout/layout.js"></script>
+	<script src="resources/js/control.js"></script>
+	<script src="resources/js/layout/layout.js"></script>
 
-	<script type="text/javascript" src="resources/js/utils/utils.js"></script>
-	<script type="text/javascript" src="resources/js/utils/enum.js"></script>
+	<script src="resources/js/utils/utils.js"></script>
+	<script src="resources/js/utils/enum.js"></script>
+	<script src="resources/js/utils/tree.js"></script>
+
+	<!-- Compiler -->
+	<script src="resources/js/compiler/control.js"></script>
+
+	<script src="resources/js/compiler/display/source.js"></script>
+	<script src="resources/js/compiler/display/tokenStream.js"></script>
+	<script src="resources/js/compiler/display/syntaxTrees.js"></script>
+	<script src="resources/js/compiler/display/output.js"></script>
+
+	<script src="resources/js/compiler/compiler/enums.js"></script>
+	<script src="resources/js/compiler/compiler/lexer.js"></script>
+	<script src="resources/js/compiler/compiler/parser.js"></script>
+	<script src="resources/js/compiler/compiler/syntaxTrees.js"></script>
+	<script src="resources/js/compiler/compiler/scope.js"></script>
+	<script src="resources/js/compiler/compiler/semanticAnalyzer.js"></script>
+	<script src="resources/js/compiler/compiler/codeGeneratorHelper.js"></script>
+	<script src="resources/js/compiler/compiler/codeGenerator.js"></script>
+	<script src="resources/js/compiler/compiler/testPrograms.js"></script>
 
 	<!-- Operating System -->
 	<!-- Host -->
-	<script type="text/javascript" src="resources/js/os/host/control.js"></script>
-	<script type="text/javascript" src="resources/js/os/host/cpu.js"></script>
-	<script type="text/javascript" src="resources/js/os/host/memory.js"></script>
-	<script type="text/javascript" src="resources/js/os/host/hardDrive.js"></script>
-	<script type="text/javascript" src="resources/js/os/host/console.js"></script>
-	<script type="text/javascript" src="resources/js/os/host/statusBar.js"></script>
-	<script type="text/javascript" src="resources/js/os/host/log.js"></script>
-	<script type="text/javascript" src="resources/js/os/host/programInput.js"></script>
+	<script src="resources/js/os/host/control.js"></script>
+	<script src="resources/js/os/host/cpu.js"></script>
+	<script src="resources/js/os/host/memory.js"></script>
+	<script src="resources/js/os/host/hardDrive.js"></script>
+	<script src="resources/js/os/host/console.js"></script>
+	<script src="resources/js/os/host/statusBar.js"></script>
+	<script src="resources/js/os/host/log.js"></script>
+	<script src="resources/js/os/host/programInput.js"></script>
 	<!-- Host displays -->
-	<script type="text/javascript" src="resources/js/os/host/display/cpu.js"></script>
-	<script type="text/javascript" src="resources/js/os/host/display/memory.js"></script>
-	<script type="text/javascript" src="resources/js/os/host/display/hardDrive.js"></script>
-	<script type="text/javascript" src="resources/js/os/host/display/processes.js"></script>
+	<script src="resources/js/os/host/display/cpu.js"></script>
+	<script src="resources/js/os/host/display/memory.js"></script>
+	<script src="resources/js/os/host/display/hardDrive.js"></script>
+	<script src="resources/js/os/host/display/processes.js"></script>
 	<!-- OS -->
-	<script type="text/javascript" src="resources/js/os/os/kernel.js"></script>
-	<script type="text/javascript" src="resources/js/os/os/interrupt.js"></script>
-	<script type="text/javascript" src="resources/js/os/os/memoryManager.js"></script>
-	<script type="text/javascript" src="resources/js/os/os/pcb.js"></script>
-	<script type="text/javascript" src="resources/js/os/os/shell.js"></script>
-	<script type="text/javascript" src="resources/js/os/os/file.js"></script>
+	<script src="resources/js/os/os/kernel.js"></script>
+	<script src="resources/js/os/os/interrupt.js"></script>
+	<script src="resources/js/os/os/memoryManager.js"></script>
+	<script src="resources/js/os/os/pcb.js"></script>
+	<script src="resources/js/os/os/shell.js"></script>
+	<script src="resources/js/os/os/file.js"></script>
 	<!-- OS Drivers -->
-	<script type="text/javascript" src="resources/js/os/os/drivers/keyboard.js"></script>
-	<script type="text/javascript" src="resources/js/os/os/drivers/hardDrive.js"></script>
+	<script src="resources/js/os/os/drivers/keyboard.js"></script>
+	<script src="resources/js/os/os/drivers/hardDrive.js"></script>
 
 </head>
 <body>
 
 <div id="compiler">
-	<div class="comingSoon"></div>
+	<div id="compilerSourceContainer">
+		<textarea id="compilerSource"></textarea>
+		<div id="compilerSourceOptions">
+			<div id="compilerCompileButton" class="compilerSourceButton">Compile</div>
+			<div id="compilerRunButton" class="compilerSourceButton">Run</div>
+		</div>
+	</div>
+	<div id="compilerTokenStream"></div>
+	<div id="compilerSyntaxTreeContainer">
+		<div id="compilerSyntaxTreeScroller">
+			<div id="compilerCst"></div>
+			<div id="compilerAst" class="compilerActiveST"></div>
+		</div>
+		<div id="compilerSyntaxTreeOptions">
+			<div id="compilerButtonSTExpand" class="buttonSmall buttonExpand"></div>
+			<div id="compilerButtonSTToggle" class="buttonSmall buttonCst"></div>
+		</div>
+	</div>
+	<div id="compilerOutputContainer" class="scroll">
+		<div id="compilerOutput"></div>
+	</div>
 </div>
 
 <div id="os">
@@ -69,13 +118,13 @@
 		<div id="osConsoleInput"></div>
 	</div>
 	<div id="osStatusBar" class="panel">
-		<div id="osButtonPower" class="osButton" title="Power"></div>
-		<div id="osButtonHalt" class="osButton" title="Halt"></div>
-		<div id="osButtonRestart" class="osButton" title="Restart"></div>
+		<div id="osButtonPower" class="button" title="Power"></div>
+		<div id="osButtonHalt" class="button" title="Halt"></div>
+		<div id="osButtonRestart" class="button" title="Restart"></div>
 		<div id="osStatus"></div>
-		<div id="osAutoscroll" class="checkboxImage" title="Autoscroll" buttonClass="osButtonAutoscroll" checked></div>
-		<div id="osSingleStep" class="checkboxImage" title="Single Step" buttonClass="osButtonStep"></div>
-		<div id="osButtonStep" class="osButton osButtonPlay" title="Step"></div>
+		<div id="osAutoscroll" class="checkboxImage" title="Autoscroll" buttonClass="buttonAutoscroll" checked></div>
+		<div id="osSingleStep" class="checkboxImage" title="Single Step" buttonClass="buttonStep"></div>
+		<div id="buttonStep" class="button buttonPlay" title="Step"></div>
 		<div id="osTime"></div>
 	</div>
 	<div id="osLog" class="panel scroll"></div>
@@ -89,8 +138,8 @@
 			<div id="osHardDriveDisplay"></div>
 		</div>
 		<div id="osHardDriveOptions">
-			<div id="osButtonHardDriveRefresh" class="osButtonSmall osButtonRefresh"></div>
-			<div id="osButtonHardDriveExpand" class="osButtonSmall osButtonExpand"></div>
+			<div id="buttonHardDriveRefresh" class="buttonSmall buttonRefresh"></div>
+			<div id="buttonHardDriveExpand" class="buttonSmall buttonExpand"></div>
 		</div>
 	</div>
 	<div id="osProcessesContainer" class="panel scrollY">

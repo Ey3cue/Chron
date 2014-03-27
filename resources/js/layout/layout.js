@@ -22,6 +22,10 @@ Layout.init = function () {
     Layout.initTooltips();
     Layout.initCheckboxes();
 
+    __resizeFunctions.windowScroll = function () {
+        $('html').css('overflow-y', ($(window).height() > MIN_WINDOW_SIZE ? 'hidden' : 'scroll'));
+    };
+
     $('body').css('opacity', 1);
 };
 

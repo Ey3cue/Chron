@@ -30,9 +30,9 @@ OS.HardDriveDisplay.init = function () {
     _$viewerLink = $($tds[1]);
     _$viewerData = $($tds[2]);
 
-    _$expandButton = $('#osButtonHardDriveExpand');
+    _$expandButton = $('#buttonHardDriveExpand');
 
-    $('#osButtonHardDriveRefresh').click(OS.HardDriveDisplay.update);
+    $('#buttonHardDriveRefresh').click(OS.HardDriveDisplay.update);
     _$expandButton.click(OS.HardDriveDisplay.toggleExpand);
 };
 
@@ -150,7 +150,7 @@ function formatData(dataObject) {
 }
 
 OS.HardDriveDisplay.toggleExpand = function () {
-    _$expandButton.toggleClass('osButtonExpand osButtonRestore');
+    _$expandButton.toggleClass('buttonExpand buttonRestore');
     _$displayContainer.toggleClass('expanded');
     // Must wait till after animation to update
     setTimeout(function () { _$displayScroller.perfectScrollbar('update'); }, 400);

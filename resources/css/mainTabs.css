@@ -23,16 +23,19 @@
 
 .chrMainTabLeft {
 	left: 0;
+	animation: chrTabFromMiddle 0.8s;;
 	-webkit-animation: chrTabFromMiddle 0.8s;
 }
 
 .chrMainTabMiddle {
 	left: 33.33%;
+	animation: chrTabToMiddle 0.8s;
 	-webkit-animation: chrTabToMiddle 0.8s;
 }
 
 .chrMainTabRight {
 	left: 66.66%;
+	animation: chrTabFromMiddle 0.8s;
 	-webkit-animation: chrTabFromMiddle 0.8s;
 }
 
@@ -42,8 +45,8 @@
 	top: 30%;
 }
 
-.chrMainTabTitle, 
-.chrMainTabSeparator, 
+.chrMainTabTitle,
+.chrMainTabSeparator,
 .chrMainTabDescription {
 	position: absolute;
 	top: 0;
@@ -90,6 +93,20 @@
 	opacity: 1;
 }
 
+@keyframes chrTabToMiddle {
+	0% {
+		opacity: 1;
+		transform: scaleX(1);
+	}
+	50% {
+		opacity: 0.25;
+		transform: scaleX(0);
+	}
+	100% {
+		opacity: 1;
+		transform: scaleX(1);
+	}
+}
 @-webkit-keyframes chrTabToMiddle {
 	0% {
 		opacity: 1;
@@ -105,6 +122,20 @@
 	}
 }
 
+@keyframes chrTabFromMiddle {
+	0% {
+		opacity: 1;
+		transform: scaleX(1);
+	}
+	50% {
+		opacity: 0.25;
+		transform: scaleX(0);
+	}
+	100% {
+		opacity: 1;
+		transform: scaleX(1);
+	}
+}
 @-webkit-keyframes chrTabFromMiddle {
 	0% {
 		opacity: 1;

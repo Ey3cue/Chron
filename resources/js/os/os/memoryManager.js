@@ -104,6 +104,7 @@ var deallocate = OS.MemoryManager.deallocate = function (pcb) {
  */
 var loadProcess = OS.MemoryManager.loadProcess = function (pcb, code) {
     allocate(pcb);
+    var savedRelocationReg = _relocationReg; // In case a process is currently running
     _relocationReg = pcb.base;
 
     trace('Loading process into memory @0x' + _relocationReg.toHex(3));
@@ -114,6 +115,8 @@ var loadProcess = OS.MemoryManager.loadProcess = function (pcb, code) {
     for (var address = 0; address < codeLength && address < OS.MEMORY_BLOCK_SIZE; address++) {
         write(address, code.substr(address * 2, 2));
     }
+
+    _relocationReg = savedRelocationReg;
 };
 
 /**
