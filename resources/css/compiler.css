@@ -212,7 +212,7 @@ svg {
 #compilerOutputContainer {
     left: 400px;
     top: 350px;
-    width: 600px;
+    width: 400px;
     height: 150px;
 }
 
@@ -224,29 +224,28 @@ svg {
     position: relative;
     cursor: pointer;
 }
-/*
-.compilerCode:before {
-    content: 'RUN';
-    position: relative;
-    padding: 0 5px;
-    margin-right: 5px;
-    top: 0;
-    left: 0;
-    height: 100%;
-    line-height: 15px;
-    background-color: #E0E0E0;
-    border-radius: 7.5px;
-    font-weight: bold;
-    color: #141414;
-    opacity: 0.6;
-    transition: opacity 0.2s;
-}
-.compilerCode:hover:before {
-    opacity: 1;
+
+/* Symbol Table*/
+
+#compilerSymbolTableContainer {
+    left: 820px;
+    top: 350px;
+    width: 180px;
+    height: 150px;
 }
 
-.compilerCode .compilerCodeShow {
-    white-space: pre-wrap;
-    word-wrap: break-word;
+#compilerSymbolTable {
+    width: 100%;
 }
-*/
+#compilerSymbolTable table {
+    width: 100%;
+}
+#compilerSymbolTable table tr th,
+#compilerSymbolTable table tr td {
+    padding: 2px;
+    text-align: center;
+}
+#compilerSymbolTable table tr th {
+    opacity: 0.6;
+    font-weight: normal;
+}

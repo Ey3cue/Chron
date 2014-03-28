@@ -26,6 +26,7 @@ Compiler.Control.init = function () {
     Compiler.TokenStreamDisplay.init();
     Compiler.SyntaxTreeDisplay.init();
     Compiler.Output.init();
+    Compiler.SymbolTableDisplay.init();
 };
 
 Compiler.compile =
@@ -34,9 +35,9 @@ Compiler.Control.compile = function () {
 
     Compiler.sourceCode = Compiler.Source.getCode();
     Compiler.tokenStream = [];
-    // Compiler.symbolTable = new SymbolTable();
+    Compiler.symbolTable = new Compiler.SymbolTable();
 
-    // Compiler.cst = new CST();
+    Compiler.cst = new Compiler.CST();
 
     Compiler.code = '';
 
@@ -46,8 +47,8 @@ Compiler.Control.compile = function () {
 
     // Clear displays
     Compiler.TokenStreamDisplay.clear();
-    // SyntaxTreeDisplay.clear();
-    // SymbolTableDisplay.clear();
+    Compiler.SyntaxTreeDisplay.clear();
+    Compiler.SymbolTableDisplay.clear();
     Compiler.Output.clear();
 
     // Check for empty source code
@@ -87,7 +88,7 @@ Compiler.Control.compile = function () {
 
     // This is outside try block because it handles both errors and successes
     Compiler.TokenStreamDisplay.set();
-    // Compiler.SymbolTableDisplay.set();
+    Compiler.SymbolTableDisplay.set();
 
     Compiler.log();
     for (var i = 0; i < Compiler.problems.length; i++) {

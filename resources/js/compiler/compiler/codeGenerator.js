@@ -195,8 +195,6 @@ function generatePrint(node) {
  */
 function generateIntop(node) {
     generate(node.children[1]);
-    // TODO - now there can be a int symbol too
-    console.log(node.children[0].value.value);
     Ops.adc(node.children[0].value.value); // In our grammar, there can only ever be a digit here
 }
 

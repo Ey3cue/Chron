@@ -123,6 +123,11 @@ Compiler.SyntaxTreeDisplay.setAst = function () {
                      .perfectScrollbar('update');
 };
 
+Compiler.SyntaxTreeDisplay.clear = function () {
+    _cstGraph.clear();
+    _astGraph.clear();
+};
+
 function createCstNodes(parentCell, node) {
     var cell = createNode(node.value.toString());
     _cstCells.push(cell);

@@ -118,6 +118,10 @@ function statement() {
     } else if (_currentToken.is(Token.Kind.OPEN_BRACE)) {
         trace('Found ' + _currentToken.name() + ", parsing '<Block>'");
         parse(statementBlock);
+
+    } else {
+        trace('Invalid statement starting with ' + _currentToken.name());
+        Compiler.addError('Invalid statement starting with ' + _currentToken.name(), _currentToken.line);
     }
 }
 
