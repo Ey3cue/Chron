@@ -25,6 +25,7 @@ Compiler.Control.init = function () {
 
     Compiler.TokenStreamDisplay.init();
     Compiler.SyntaxTreeDisplay.init();
+    Compiler.ControlFlowGraphDisplay.init();
     Compiler.Output.init();
     Compiler.SymbolTableDisplay.init();
 };
@@ -70,9 +71,14 @@ Compiler.Control.compile = function () {
 
         Compiler.ast = new Compiler.AST(Compiler.cst);
         Compiler.SyntaxTreeDisplay.initAst();
+        Compiler.SyntaxTreeDisplay.setAst();
 
         Compiler.SemanticAnalyzer.analyze();
         Compiler.log('Semantic analysis completed successfully.');
+
+        Compiler.cfg = new Compiler.ControlFlowGraph(Compiler.ast);
+        Compiler.ControlFlowGraphDisplay.initCfg();
+        Compiler.ControlFlowGraphDisplay.set();
 
         Compiler.CodeGenerator.generate();
 

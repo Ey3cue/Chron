@@ -203,7 +203,76 @@ svg {
     background-color: #141414;
     transition: opacity 0.4s;
 }
+#compilerSyntaxTreeContainer:hover {
+    z-index: 1; /* So that options overlay CFG */
+}
 #compilerSyntaxTreeContainer:hover #compilerSyntaxTreeOptions {
+    opacity: 1;
+}
+
+/* Control Flow Graph */
+
+#compilerCfgContainer {
+    left: 700px;
+    top: 35px;
+    width: 290px;
+    height: 300px;
+    background-color: #141414;
+    transition: all 0.4s;
+}
+#compilerCfgContainer.expanded {
+    left: 400px;
+    top: 0;
+    width: 600px;
+    height: 500px;
+    z-index: 2000;
+}
+
+#compilerCfgScroller {
+    overflow: hidden;
+    position: relative;
+    width: 100%;
+    height: 100%;
+}
+
+#compilerCfg {
+    position: absolute;
+    min-width: 290px;
+    min-height: 300px;
+    transition: opacity 0.4s;
+}
+
+#compilerCfg.compilerCfgGen {
+    cursor: pointer;
+    text-align: center;
+}
+#compilerCfg.compilerCfgGen:after {
+    content: 'Generate CFG';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 290px;
+    height: 300px;
+    background-color: #141414;
+    font-size: 20px;
+    line-height: 300px;
+    opacity: 0.6;
+    transition: opacity 0.2s;
+}
+#compilerCfg.compilerCfgGen:hover:after {
+    opacity: 1;
+}
+
+#compilerCfgOptions {
+    position: absolute;
+    top: 0;
+    right: -24px;
+    width: 22px;
+    opacity: 0;
+    background-color: #141414;
+    transition: opacity 0.4s;
+}
+#compilerCfgContainer:hover #compilerCfgOptions {
     opacity: 1;
 }
 

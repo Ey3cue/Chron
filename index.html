@@ -40,6 +40,7 @@
 	<script src="resources/js/utils/utils.js"></script>
 	<script src="resources/js/utils/enum.js"></script>
 	<script src="resources/js/utils/tree.js"></script>
+	<script src="resources/js/utils/graph.js"></script>
 
 	<!-- Compiler -->
 	<!-- General -->
@@ -48,6 +49,7 @@
 	<script src="resources/js/compiler/display/source.js"></script>
 	<script src="resources/js/compiler/display/tokenStream.js"></script>
 	<script src="resources/js/compiler/display/syntaxTrees.js"></script>
+	<script src="resources/js/compiler/display/controlFlowGraph.js"></script>
 	<script src="resources/js/compiler/display/output.js"></script>
 	<script src="resources/js/compiler/display/symbolTable.js"></script>
 	<!-- Compiler -->
@@ -57,6 +59,7 @@
 	<script src="resources/js/compiler/compiler/syntaxTrees.js"></script>
 	<script src="resources/js/compiler/compiler/scope.js"></script>
 	<script src="resources/js/compiler/compiler/semanticAnalyzer.js"></script>
+	<script src="resources/js/compiler/compiler/controlFlowGraph.js"></script>
 	<script src="resources/js/compiler/compiler/codeGeneratorHelper.js"></script>
 	<script src="resources/js/compiler/compiler/codeGenerator.js"></script>
 	<script src="resources/js/compiler/compiler/testPrograms.js"></script>
@@ -109,13 +112,19 @@
 			<div id="compilerButtonSTToggle" class="buttonSmall buttonCst"></div>
 		</div>
 	</div>
+	<div id="compilerCfgContainer">
+		<div id="compilerCfgScroller">
+			<div id="compilerCfg"></div>
+		</div>
+		<div id="compilerCfgOptions">
+			<div id="compilerButtonCfgExpand" class="buttonSmall buttonExpand"></div>
+		</div>
+	</div>
 	<div id="compilerOutputContainer" class="scroll">
 		<div id="compilerOutput"></div>
 	</div>
 	<div id="compilerSymbolTableContainer" class="scrollY">
-		<div id="compilerSymbolTable">
-
-		</div>
+		<div id="compilerSymbolTable"></div>
 	</div>
 </div>
 

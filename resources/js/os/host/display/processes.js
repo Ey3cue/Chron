@@ -49,7 +49,7 @@ OS.ProcessesDisplay.update = function () {
                          '<td>0x' + process.yReg.toHex(2) + '</td>' +
                          '<td>0x' + process.zFlag.toHex(2) + '</td>' +
                          '<td>' + page + '</td>' +
-                         '</tr>';
+                     '</tr>';
         }
 
         _$display.html(table + '</table>');
