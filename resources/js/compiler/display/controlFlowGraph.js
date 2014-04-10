@@ -73,7 +73,7 @@ Compiler.ControlFlowGraphDisplay.set = function () {
     cfg.graph.resetVisitor();
 
     _graph.resetCells(_cells.concat(_edgeCells));
-    joint.layout.DirectedGraph.layout(_graph, { setLinkVertices: false, nodeSep: 150 });
+    joint.layout.DirectedGraph.layout(_graph, { setLinkVertices: true, nodeSep: 150 });
 
     _paper.fitToContent();
     //_paper.setDimensions(_paper.options.width + 10, _paper.options.width + 10);
@@ -145,7 +145,7 @@ function createNode(block) {
     });
 }
 
-function createEdge(fromId, toId, color, smooth) {
+function createEdge(fromId, toId, color) {
     color = color || '#E0E0E0';
 
     return new joint.dia.Link({
@@ -155,7 +155,7 @@ function createEdge(fromId, toId, color, smooth) {
             '.connection': { stroke: color },
             '.marker-target': { fill: color, d: 'M 10 0 L 0 5 L 10 10 z' }
         },
-        smooth: smooth
+        smooth: false
     });
 }
 
