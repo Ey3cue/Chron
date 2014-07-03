@@ -36,6 +36,9 @@ Control.init = function () {
     // Compiler
     Compiler.Control.init();
 
+    // CPU
+    CPU.Control.init();
+
     // TODO Figure out why this timeout is needed. For developing, disabling it, but it is a current
     //   workaround for the OS not being able to shut down when activated too quickly.
     //setTimeout(function () {
