@@ -62,6 +62,7 @@ OS.FileStatus = new Enum(0,
 OS.clock = 0;
 OS.cpuClockInterval = null;
 OS.singleStep = false;
+OS.halted = false;
 
 OS.hardDrive = null;
 OS.mbr = null;
@@ -114,6 +115,7 @@ OS.Control.start = function () {
     OS.Log.clear();
 
     OS.trace('Starting.');
+    OS.halted =
 
     OS.trace('Starting CPU clock.');
     OS.cpuClockInterval = setInterval(OS.Control.clockPulse, OS.CPU_CLOCK_SPEED);
@@ -176,7 +178,8 @@ OS.Control.stop = function () {
 };
 
 OS.Control.halt = function () {
-    throw 'Unimplemented: OS.Control.halt';
+    OS.Control.trace('Emergency halt.');
+    OS.halted = true;
 };
 
 OS.Control.restart = function () {
@@ -190,8 +193,8 @@ OS.Control.updateStatus = function (status) {
 };
 
 OS.Control.clockPulse = function (step) {
-    // Do not pulse if on the compiler
-    if (MainTabs.activeId === 'compiler') {
+    // Do not pulse if halted or on the compiler
+    if (OS.halted || MainTabs.activeId === 'compiler') {
         return;
     }
 

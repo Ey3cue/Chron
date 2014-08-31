@@ -38,7 +38,7 @@ OS.KeyboardDriver.isr = function () {
         // Check to see if we even want to deal with the key that was pressed.
         if ( ((keyCode >= 65) && (keyCode <=  90)) ||  // A..Z
              ((keyCode >= 97) && (keyCode <= 123)) ) { // a..z
-            // Determine the character we want to display.  
+            // Determine the character we want to display.
             // Assume it's lowercase...
             chr = String.fromCharCode(keyCode + 32);
             // ... then check the shift key and re-adjust if necessary.
@@ -65,7 +65,6 @@ OS.KeyboardDriver.isr = function () {
             OS.Console.writeInput(' ');
         } else if (keyCode === 13) { // Enter
             OS.Console.enter();
-            // TODO tell shell to handle input
         } else if (keyCode === 8) { // Backspace
             OS.Console.backspace();
         }

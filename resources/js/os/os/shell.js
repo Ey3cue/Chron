@@ -129,6 +129,14 @@ addCommand({
     }
 });
 
+addCommand({
+    command: 'fail',
+    description: 'Produce an OS error to be trapped.',
+    funct: function () {
+        OS.Kernel.trapError('A user-generated trap error.');
+    }
+});
+
 addCommand('spacer');
 
 // ---------- Process Handling ----------

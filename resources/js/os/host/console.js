@@ -13,6 +13,8 @@ var _$console;
 var _$consoleOutput;
 var _$consoleInput;
 
+var _$bsod;
+
 var _$prompt;
 var _$input;
 var _$caret;
@@ -29,6 +31,9 @@ OS.Console.init = function () {
     _$consoleOutput = $('#osConsoleOutput');
     // Input and associated elements
     _$consoleInput = $('#osConsoleInput');
+
+    _$bsod = $('#osBsod');
+    _$bsod.html("<h1>:(</h1><h3>ChronOS ran into a problem that it couldn't handle, and now it needs to restart.</h3>");
 
     _prompt = 'ChronOS>';
     _inputText = '';
@@ -73,6 +78,9 @@ OS.Console.start = function () {
 OS.Console.stop = function () {
     _$console.css('opacity', 0);
     _$input.off('keydown');
+    _$bsod.css('opacity', 0);
+    // Hide after fade is completed so it doesn't block the console.
+    setTimeout(function () { _$bsod.hide(); }, 400);
 };
 
 OS.Console.clear = function () {
@@ -116,8 +124,7 @@ OS.Console.getInputBuffer = function () {
 };
 
 OS.Console.bsod = function () {
-    console.log('BSOD!');
-    // TODO
+    _$bsod.show().css('opacity', 1);
 };
 
 OS.Console.writeInput = function (chr) {

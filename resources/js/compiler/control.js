@@ -105,16 +105,29 @@ Compiler.Control.compile = function () {
 
     if (Compiler.code.length) {
         Compiler.Output.showCode(Compiler.code);
+        console.log(Compiler.code);
     }
 };
 
 Compiler.Control.run =
 Compiler.run = function () {
+    // TODO Clean this up
+
+    function doRun() {
+        var pid = OS.Kernel.loadProgram(Compiler.code, null, null, true);
+        OS.ProgramInput.setInput(Compiler.code);
+        OS.Kernel.runProcess(pid);
+    }
+
     if (Compiler.code.length) {
         MainTabs.triggerSelect('os');
         setTimeout(function () {
-            var pid = OS.Kernel.loadProgram(Compiler.code, null, null, true);
-            OS.Kernel.runProcess(pid);
+            if (OS.halted) {
+                OS.Control.restart();
+                setTimeout(doRun, 1200);
+            } else {
+                doRun();
+            }
         }, 800);
     }
 };

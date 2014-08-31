@@ -92,13 +92,13 @@ Code.prototype.backpatch = function (staticTable, jumpTable) {
 Code.prototype.toString = function () {
     var code = [].concat(this.code); // Make a copy
 
-    while (code.length + this.heap.length < 255) {
+    while (code.length + this.heap.length < OS.MEMORY_BLOCK_SIZE - 1) {
         code.push('00');
     }
 
     code = code.concat(this.heap);
 
-    if (code.length > 255) {
+    if (code.length >= OS.MEMORY_BLOCK_SIZE) {
         Compiler.addError("Too much code for the given block size.");
     }
 

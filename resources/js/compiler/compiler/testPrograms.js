@@ -154,7 +154,27 @@ Compiler.TEST_PROGS = {
     '    }\n' +
     '    \n' +
     '    print(s)\n' +
+    '}\n',
+/*
+    'String Compare':
+    '{\n' +
+    '    string s\n' +
+    '    s = "hello"\n' +
+    '    string t\n' +
+    '    t = "hello"\n' +
+    '    \n' +
+    '    if (s == t) {\n' +
+    '        print("yes")\n' +
+    '    }\n' +
+    '}\n',
+
+    'String Literal Compare':
+    '{\n' +
+    '    if ("hello" == "hello") {\n' +
+    '        print("yes")\n' +
+    '    }\n' +
     '}\n'
+*/
 };
 
 Compiler.TEST_PROGS_PROJECT2 = {

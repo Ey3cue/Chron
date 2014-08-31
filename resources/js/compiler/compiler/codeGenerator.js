@@ -106,7 +106,7 @@ function generateWhile(node) {
     Ops.sta();
     Ops.ldx('01');
     Ops.cpx();
-    Ops.bne((256 - (_code.currentAddress - address + 2)).toHex(2));
+    Ops.bne((OS.MEMORY_BLOCK_SIZE - (_code.currentAddress - address + 2)).toHex(2));
     // Set jump address
     _jumpTable.setLast(_code.currentAddress);
 }
@@ -202,29 +202,39 @@ function generateIntop(node) {
  * Generates code for a equals ('==') node.
  */
 function generateBoolop(node) {
-    if (node.children[0].value.is(Nonterminal.Kind.NOT_EQUAL) ||
-        node.children[1].value.is(Nonterminal.Kind.NOT_EQUAL)) {
-        Compiler.addError("'!=' operation currently unsupported.", node.value.line);
+    var leftChild = node.children[0];
+    var rightChild = node.children[1];
+
+    if (node.value.is(Nonterminal.Kind.NOT_EQUAL)) {
+        Compiler.addError("'!=' operator currently unsupported.", node.value.line);
         // TODO
     }
 
-    if (node.children[0].value.is(Nonterminal.Kind.EQUAL) ||
-        node.children[1].value.is(Nonterminal.Kind.EQUAL)) {
+    if (leftChild.value.is(Nonterminal.Kind.EQUAL) || leftChild.value.is(Nonterminal.Kind.NOT_EQUAL) ||
+        rightChild.value.is(Nonterminal.Kind.EQUAL) || rightChild.value.is(Nonterminal.Kind.NOT_EQUAL)) {
         // This very tricky with our instruction set because it requires comparing the result
         //   of a comparison to another value. Since the result of a comparison is stored in the Z
         //   register, it's only indirectly accessible with branches.
         //   e.g. if (true==(1==1)) { ... }
-        Compiler.addError("Nesting '==' operators currently unsupported.", node.value.line);
-        // TODO If time...
+        Compiler.addError("Nesting '==' or '!=' operators currently unsupported.", node.value.line);
+        // TODO
+    }
+
+    console.log(leftChild);
+    console.log(rightChild);
+
+    if (leftChild.value.is(Nonterminal.Kind.STRING) ||
+        (Utils.is(leftChild.value, Compiler.Symbol) && leftChild.value.is('string')) ) {
+        Compiler.addError("Comparing 'string' types currently unsupported.", node.value.line);
     }
 
     // Generate left side
-    generate(node.children[0]);
+    generate(leftChild);
     // Store result in X register
     Ops.sta();
     Ops.ldx();
     // Generate right side
-    generate(node.children[1]);
+    generate(rightChild);
     // Compare
     Ops.sta();
     Ops.cpx();

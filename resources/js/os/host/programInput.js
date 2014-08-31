@@ -32,12 +32,17 @@ OS.ProgramInput.getInput = function () {
     return filter(_$display.html());
 };
 
+OS.ProgramInput.setInput = function (text) {
+    _$display.text(text);
+    filterInput();
+};
+
 function keyPress(event) {
     _$container.perfectScrollbar('update');
 }
 
 function filterInput(event) {
-    var rawCode = filter(_$display.html());
+    var rawCode = filter(_$display.text());
     var code = '';
 
     // Add a space between every two characters

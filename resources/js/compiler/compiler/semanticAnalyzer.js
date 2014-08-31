@@ -193,7 +193,7 @@ function analyzeBoolop(node) {
 
     trace("Equals: Checking left type.", token.line);
 
-    if (typeLeft !== 'boolean' && typeLeft !== 'int') {
+    if (typeLeft !== 'boolean' && typeLeft !== 'int' && typeLeft !== 'string') {
         Compiler.addError("Cannot compare type '" + typeLeft + "'", token.line);
     }
 
@@ -202,7 +202,7 @@ function analyzeBoolop(node) {
 
     trace("Equals: Checking right type.", token.line);
 
-    if (typeRight !== 'boolean' && typeRight !== 'int') {
+    if (typeRight !== 'boolean' && typeRight !== 'int' && typeRight !== 'string') {
         Compiler.addError("Cannot compare type '" + typeRight + "'", token.line);
     }
 

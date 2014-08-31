@@ -41,9 +41,9 @@ Control.init = function () {
 
     // TODO Figure out why this timeout is needed. For developing, disabling it, but it is a current
     //   workaround for the OS not being able to shut down when activated too quickly.
-    //setTimeout(function () {
-    MainTabs.triggerSelect(URL_PARAMETERS.start);
-    //}, 1000);
+    setTimeout(function () {
+        MainTabs.triggerSelect(URL_PARAMETERS.start);
+    }, 1000);
 };
 
 Control.resize = function () {
