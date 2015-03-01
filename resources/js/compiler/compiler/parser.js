@@ -58,7 +58,7 @@ function parse(production, args) {
  */
 function program() {
     parse(statementBlock);
-    //matchToken(Token.Kind.EOF_SIGN); // Not necessary to keep this in the tree.
+    matchToken(Token.Kind.EOF_SIGN);
 }
 
 /**
@@ -348,7 +348,9 @@ function matchToken(kind) {
  * _nextToken variables appropriately.
  */
 function consumeToken() {
-    _cst.add(_currentToken);
+    if (!_currentToken.is(Token.Kind.EOF_SIGN)) {
+        _cst.add(_currentToken);
+    }
     _currentToken = _tokens[_index++];
     _nextToken = _tokens[_index]; // If at the end, this will be undefined
 }

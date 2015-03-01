@@ -20,7 +20,7 @@ Compiler.Output.add = function (message) {
 };
 
 Compiler.Output.show = function () {
-    _$display.html(_$display.html() + convertMessage(_log));
+    _$display.html(_$display.html() + convertMessage(_log + '\n'));
     scrollToBottom();
 };
 
